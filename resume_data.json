@@ -1,0 +1,106 @@
+{
+  "name": "Jason Chan",
+  "title": "Software Engineer & AI Enthusiast",
+  "education": {
+    "degree": "Bachelor of Science in Computer Science",
+    "school": "Khoury College of Computer Science, Northeastern University",
+    "location": "Boston, MA",
+    "gpa": "3.8/4.0",
+    "graduation": "May 2027",
+    "coursework": ["Object Oriented Design", "Algorithms & Data Structures", "Computer Systems", "Linear Algebra", "Cybersecurity"]
+  },
+  "about": {
+    "description": "I'm a Computer Science student at Northeastern University passionate about building innovative software solutions and exploring the intersection of AI, full-stack development, and human-computer interaction.",
+    "details": [
+      "I have hands-on experience in full-stack development, machine learning, and Android development. I've interned at Teledyne FLIR working on multi-robot control systems and have participated in prestigious hackathons like HackMIT.",
+      "Beyond coding, I'm passionate about community building - I've organized hackathons, served as a student ambassador, and enjoy teaching programming to others. I'm always eager to tackle challenging problems and learn new technologies."
+    ]
+  },
+  "experience": [
+    {
+      "title": "Software Engineering Intern, Unmanned Ground Systems",
+      "company": "Teledyne FLIR",
+      "period": "January 2025 - June 2025",
+      "summary": "Developed and maintained full-stack Android/Java software for multi-robot control systems.",
+      "description": [
+        "Developed and maintained full-stack Android/Java software for the Multi-Robot Control System, enabling simultaneous control of multiple unmanned ground systems",
+        "Applied Agile best practices, unit testing (JUnit), and peer review to maintain code quality in a large, complex codebase",
+        "Implemented new features and proactively uncovered and resolved critical issues while optimizing Android lifecycle management and collaborating with cross-functional teams"
+      ]
+    },
+    {
+      "title": "Executive Board Member",
+      "company": "PawHacks",
+      "period": "November 2023 - March 2024",
+      "summary": "Organized the first student-led hackathon on the Northeastern Oakland campus.",
+      "description": [
+        "Conceived and organized the first student-led hackathon on the Northeastern Oakland campus",
+        "Led funding team to successfully secure $15,000+ in sponsorships from Khoury College of Northeastern",
+        "Actively recruited 150+ students from universities across the U.S. to participate in the hackathon",
+        "Coordinated logistical support during the event, ensuring a positive experience for all attendees"
+      ]
+    },
+    {
+      "title": "Student Ambassador",
+      "company": "Replit",
+      "period": "August 2022 - December 2022",
+      "summary": "Awarded 1 of 25 worldwide Replit Student Ambassadorships.",
+      "description": [
+        "Awarded 1 of 25 worldwide Replit Student Ambassadorships",
+        "Championed and grew the Replit community by hosting workshops, presentations, and meetups, teaching programming to 100+ students",
+        "Beta tested Ghostwriter AI to ensure smooth deployment and provided online support to Replit users"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cosign - ASL Sign Recognition",
+      "description": "A CNN with LSTMs classifying 250+ motion-based isolated ASL signs. Selected to participate in HackMIT, placing top 15 out of 500+ participants in the MIT Hacks challenge. Utilized SocketIO for continuous webcam data streaming between Flask backend and React frontend.",
+      "technologies": ["TensorFlow", "Flask", "React", "SocketIO", "NumPy", "pandas", "Python"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "name": "X Developer Challenge - Scam Detection Tool",
+      "description": "Led a team to create a machine learning tool that warns users of potential scam posts on their timeline. Selected to participate out of 1000+ applicants. Trained and integrated an LLM using few-shot learning for classification of tweets fetched via the X API.",
+      "technologies": ["Python", "LLMs", "Few-Shot Learning", "X API", "Machine Learning"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "name": "Tesla Sentiment Analysis",
+      "description": "Developed an NLP project to determine positive attributes people associate with Tesla. Utilized the VADER model in NLTK to analyze over 10,000 tweets and cleaned data using stopword removal and lemmatization.",
+      "technologies": ["Python", "NLTK", "VADER", "NLP", "Data Analysis"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "name": "Mask Verified - COVID-19 Security",
+      "description": "Won 'Best Covid-19 Hack' by creating a program to enhance security during Covid-19. Trained a CNN using TensorFlow to detect mask usage based on facial landmarks via computer vision.",
+      "technologies": ["TensorFlow", "Computer Vision", "Python", "OpenCV"],
+      "github": "",
+      "demo": ""
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": ["Python", "Java", "JavaScript", "TypeScript", "C", "C++", "C#", "Kotlin", "Rust", "HTML", "CSS", "SQL", "Ruby", "Go"]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "items": ["React", "Angular", "Vue", "Spring", "Node.js", "Next.js", "PyTorch", "TensorFlow", "OpenCV", "NumPy", "pandas", "NLTK"]
+    },
+    {
+      "category": "Tools & Technologies",
+      "items": ["Git", "Linux", "Docker", "Kubernetes", "MongoDB", "PostgreSQL", "Azure", "Apache Spark", "MATLAB", "Agile", "Postman", "Swagger"]
+    }
+  ],
+  "contact": {
+    "email": "chan.jaso@northeastern.edu",
+    "phone": "857-289-4686",
+    "github": "",
+    "linkedin": "https://linkedin.com/in/jasonchan8",
+    "twitter": ""
+  }
+}
