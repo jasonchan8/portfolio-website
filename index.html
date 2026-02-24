@@ -3,138 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jason Chan - Developer Portfolio</title>
+    <title>Jason Chan — Software Engineer</title>
+    <meta name="description" content="Jason Chan is a software engineer specializing in machine learning and full-stack systems.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="three-background"></div>
-    
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">JC</div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <a href="resume/Jason_Chan_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-resume-btn">Resume</a>
-            <div class="hamburger">
+
+    <!-- Grain overlay for atmosphere -->
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <header class="nav">
+        <a href="#hero" class="nav-name">Jason Chan</a>
+        <div class="nav-right">
+            <a href="resume/Jason_Chan_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-link">Resume</a>
+            <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
                 <span></span>
                 <span></span>
-                <span></span>
-            </div>
+            </button>
         </div>
-    </nav>
+        <nav class="nav-menu" role="navigation">
+            <a href="#about" class="nav-menu-link">01 / About</a>
+            <a href="#work" class="nav-menu-link">02 / Work</a>
+            <a href="#experience" class="nav-menu-link">03 / Experience</a>
+            <a href="#skills" class="nav-menu-link">04 / Skills</a>
+            <a href="#contact" class="nav-menu-link">05 / Contact</a>
+        </nav>
+    </header>
 
     <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="greeting">Hi, I'm</span>
-                    <span class="name" id="typed-name">Jason Chan</span>
-                    <span class="title-rotating">
-                        <span class="title-text">Software Engineer</span>
-                        <span class="title-text">AI Enthusiast</span>
-                        <span class="title-text">Full-Stack Developer</span>
-                    </span>
+
+        <!-- Hero -->
+        <section id="hero" class="hero">
+            <div class="hero-inner">
+                <h1 class="hero-name" data-reveal>
+                    <span class="hero-name-line">Jason</span>
+                    <span class="hero-name-line">Chan</span>
                 </h1>
-                <p class="hero-description">
-                    Transforming complex problems into elegant solutions through code, algorithms, and machine learning
-                </p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                <div class="hero-meta" data-reveal data-delay="1">
+                    <p class="hero-subtitle">Software engineer specializing in machine learning and full-stack systems.</p>
+                    <p class="hero-location">Boston, MA &mdash; Northeastern University &rsquo;27</p>
                 </div>
+                <div class="hero-accent" aria-hidden="true"></div>
             </div>
-            <div class="scroll-indicator">
+            <div class="hero-scroll" data-reveal data-delay="2">
                 <span>Scroll</span>
-                <div class="scroll-line"></div>
+                <div class="hero-scroll-line"></div>
             </div>
         </section>
 
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section-title">About Me</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p class="lead" id="about-lead">
-                            I'm a passionate developer who loves turning complex problems into simple, 
-                            elegant solutions through code.
-                        </p>
-                        <p id="about-detail-1">
-                            With a strong foundation in modern web technologies and a keen eye for design, 
-                            I create applications that are both beautiful and functional. I thrive in 
-                            collaborative environments and am always eager to learn new technologies and 
-                            tackle challenging problems.
-                        </p>
-                        <p id="about-detail-2">
-                            When I'm not coding, you can find me exploring new frameworks, contributing 
-                            to open source projects, or sharing knowledge with the developer community.
-                        </p>
-                        <div id="education-section"></div>
-                        <div id="reference-section"></div>
+        <!-- About -->
+        <section id="about" class="section">
+            <div class="section-grid">
+                <div class="section-label" data-reveal>
+                    <span class="section-number">01</span>
+                    <span class="section-divider">/</span>
+                    <span>About</span>
+                </div>
+                <div class="section-content" data-reveal data-delay="1">
+                    <p class="about-lead">I build things that think. Currently studying Computer Science at Northeastern (3.8 GPA), I spend most of my time at the intersection of machine learning and software engineering&mdash;training models, shipping full-stack apps, and figuring out how to make both work together in the real world.</p>
+                    <p class="about-body">I've built CNNs that classify sign language, shipped Android software controlling unmanned ground vehicles at Teledyne FLIR, and organized hackathons that brought 150+ students together. I got selected for HackMIT (top 15 of 500+), the X Developer Challenge (out of 1,000+ applicants), and was one of 25 worldwide Replit Student Ambassadors.</p>
+                    <p class="about-body">I care about writing clean systems, understanding problems deeply, and building software that actually matters.</p>
+                    <div class="about-links">
+                        <a href="reference/JasonChan-Reference.pdf" target="_blank" rel="noopener noreferrer" class="inline-link">Reference from my manager at Teledyne FLIR &rarr;</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="experience" class="experience">
-            <div class="container">
-                <h2 class="section-title">Experience</h2>
-                <div class="timeline" id="experience-timeline">
-                    <!-- Experience items will be populated by JavaScript -->
+        <!-- Work -->
+        <section id="work" class="section">
+            <div class="section-grid">
+                <div class="section-label" data-reveal>
+                    <span class="section-number">02</span>
+                    <span class="section-divider">/</span>
+                    <span>Selected Work</span>
+                </div>
+                <div class="section-content">
+
+                    <article class="project" data-reveal>
+                        <div class="project-header">
+                            <h3 class="project-name">Cosign</h3>
+                            <span class="project-context">HackMIT &mdash; Top 15 of 500+</span>
+                        </div>
+                        <p class="project-description">Real-time ASL sign language recognition using a CNN with LSTMs, classifying 250+ motion-based signs. Webcam data streams via SocketIO between a Flask backend and React frontend. Trained on 90,000+ cleaned video samples.</p>
+                        <div class="project-stack">
+                            <span>TensorFlow</span>
+                            <span>Flask</span>
+                            <span>React</span>
+                            <span>SocketIO</span>
+                            <span>Python</span>
+                        </div>
+                    </article>
+
+                    <article class="project" data-reveal>
+                        <div class="project-header">
+                            <h3 class="project-name">Scam Detection Tool</h3>
+                            <span class="project-context">X Developer Challenge &mdash; Selected from 1,000+</span>
+                        </div>
+                        <p class="project-description">Built an ML pipeline that warns users of potential scam posts on their timeline. Fine-tuned an LLM using few-shot learning to classify tweets fetched via the X API in real time.</p>
+                        <div class="project-stack">
+                            <span>Python</span>
+                            <span>LLMs</span>
+                            <span>Few-Shot Learning</span>
+                            <span>X API</span>
+                        </div>
+                    </article>
+
+                    <article class="project" data-reveal>
+                        <div class="project-header">
+                            <h3 class="project-name">Tesla Sentiment Analysis</h3>
+                        </div>
+                        <p class="project-description">NLP pipeline analyzing 10,000+ tweets to extract positive brand associations. Used VADER sentiment analysis with custom data cleaning&mdash;stopword removal and lemmatization&mdash;to surface meaningful patterns.</p>
+                        <div class="project-stack">
+                            <span>Python</span>
+                            <span>NLTK</span>
+                            <span>VADER</span>
+                            <span>NLP</span>
+                        </div>
+                    </article>
+
+                    <article class="project" data-reveal>
+                        <div class="project-header">
+                            <h3 class="project-name">Mask Verified</h3>
+                            <span class="project-context">Best Covid-19 Hack Winner</span>
+                        </div>
+                        <p class="project-description">Award-winning computer vision system that detects mask usage from facial landmarks in real time. Trained a CNN using TensorFlow to enhance public safety during the pandemic.</p>
+                        <div class="project-stack">
+                            <span>TensorFlow</span>
+                            <span>OpenCV</span>
+                            <span>Computer Vision</span>
+                            <span>Python</span>
+                        </div>
+                    </article>
+
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="projects">
-            <div class="container">
-                <h2 class="section-title">Projects</h2>
-                <div class="projects-grid" id="projects-grid">
-                    <!-- Projects will be populated by JavaScript -->
+        <!-- Experience -->
+        <section id="experience" class="section">
+            <div class="section-grid">
+                <div class="section-label" data-reveal>
+                    <span class="section-number">03</span>
+                    <span class="section-divider">/</span>
+                    <span>Experience</span>
+                </div>
+                <div class="section-content">
+
+                    <div class="exp-item" data-reveal>
+                        <div class="exp-date">Jan &ndash; Jun 2025</div>
+                        <div class="exp-details">
+                            <h3 class="exp-role">Software Engineering Intern</h3>
+                            <div class="exp-company">Teledyne FLIR &mdash; Unmanned Ground Systems</div>
+                            <p class="exp-summary">Built and maintained the full-stack Android/Java software powering a multi-robot control system. Applied Agile practices, JUnit testing, and peer review to ship features and resolve critical issues in a complex defense codebase.</p>
+                        </div>
+                    </div>
+
+                    <div class="exp-item" data-reveal>
+                        <div class="exp-date">Nov 2023 &ndash; Mar 2024</div>
+                        <div class="exp-details">
+                            <h3 class="exp-role">Executive Board Member</h3>
+                            <div class="exp-company">PawHacks</div>
+                            <p class="exp-summary">Organized the first student-led hackathon on Northeastern&rsquo;s Oakland campus. Led sponsorship efforts securing $15,000+, recruited 150+ participants from universities across the U.S.</p>
+                        </div>
+                    </div>
+
+                    <div class="exp-item" data-reveal>
+                        <div class="exp-date">Aug &ndash; Dec 2022</div>
+                        <div class="exp-details">
+                            <h3 class="exp-role">Student Ambassador</h3>
+                            <div class="exp-company">Replit</div>
+                            <p class="exp-summary">Selected as 1 of 25 worldwide ambassadors. Hosted workshops and meetups teaching programming to 100+ students. Beta tested Ghostwriter AI before public launch.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="skills">
-            <div class="container">
-                <h2 class="section-title">Skills & Technologies</h2>
-                <div class="skills-container" id="skills-container">
-                    <!-- Skills will be populated by JavaScript -->
+        <!-- Skills -->
+        <section id="skills" class="section">
+            <div class="section-grid">
+                <div class="section-label" data-reveal>
+                    <span class="section-number">04</span>
+                    <span class="section-divider">/</span>
+                    <span>Skills</span>
+                </div>
+                <div class="section-content">
+                    <div class="skills-cloud" data-reveal>
+                        <span class="skill skill--lg">Python</span>
+                        <span class="skill skill--lg">TensorFlow</span>
+                        <span class="skill skill--lg">React</span>
+                        <span class="skill skill--md">Java</span>
+                        <span class="skill skill--md">JavaScript</span>
+                        <span class="skill skill--md">TypeScript</span>
+                        <span class="skill skill--md">PyTorch</span>
+                        <span class="skill skill--md">Node.js</span>
+                        <span class="skill skill--md">Docker</span>
+                        <span class="skill skill--md">PostgreSQL</span>
+                        <span class="skill skill--sm">C++</span>
+                        <span class="skill skill--sm">Kotlin</span>
+                        <span class="skill skill--sm">Rust</span>
+                        <span class="skill skill--sm">Go</span>
+                        <span class="skill skill--sm">C</span>
+                        <span class="skill skill--md">OpenCV</span>
+                        <span class="skill skill--md">NumPy</span>
+                        <span class="skill skill--sm">pandas</span>
+                        <span class="skill skill--md">Next.js</span>
+                        <span class="skill skill--sm">Vue</span>
+                        <span class="skill skill--sm">Angular</span>
+                        <span class="skill skill--sm">Spring</span>
+                        <span class="skill skill--md">Git</span>
+                        <span class="skill skill--sm">Linux</span>
+                        <span class="skill skill--md">Kubernetes</span>
+                        <span class="skill skill--sm">MongoDB</span>
+                        <span class="skill skill--sm">Azure</span>
+                        <span class="skill skill--sm">Apache Spark</span>
+                        <span class="skill skill--sm">NLTK</span>
+                        <span class="skill skill--sm">SQL</span>
+                        <span class="skill skill--sm">C#</span>
+                        <span class="skill skill--sm">Ruby</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="contact-description">
-                    I'm always open to discussing new projects, creative ideas, or opportunities 
-                    to be part of your vision.
-                </p>
-                <div class="contact-links" id="contact-links">
-                    <!-- Contact links will be populated by JavaScript -->
+        <!-- Contact -->
+        <section id="contact" class="section section--contact">
+            <div class="contact-inner" data-reveal>
+                <div class="section-label">
+                    <span class="section-number">05</span>
+                    <span class="section-divider">/</span>
+                    <span>Contact</span>
+                </div>
+                <h2 class="contact-heading">Let&rsquo;s build something.</h2>
+                <div class="contact-links">
+                    <a href="mailto:chan.jaso@northeastern.edu" class="contact-link">chan.jaso@northeastern.edu</a>
+                    <a href="https://linkedin.com/in/jasonchan8" target="_blank" rel="noopener noreferrer" class="contact-link">LinkedIn &nearr;</a>
+                    <a href="resume/Jason_Chan_Resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-link">Resume &nearr;</a>
                 </div>
             </div>
         </section>
+
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <p>&copy; <span id="year"></span> Jason Chan. Built with passion and code.</p>
-        </div>
+        <span>&copy; <span id="year"></span> Jason Chan</span>
+        <span>Built with intention.</span>
     </footer>
 
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
-        }
-    }
-    </script>
-    <script type="module" src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
-

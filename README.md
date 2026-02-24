@@ -1,34 +1,28 @@
-# Portfolio Website
+# Jason Chan — Portfolio
 
-A minimal, elegant portfolio website built with vanilla JavaScript and Three.js.
+A minimal, editorial portfolio built with vanilla HTML, CSS, and JavaScript. No frameworks, no build tools, no dependencies beyond Google Fonts.
 
-## Features
+## Design
 
-- Clean, modern design
-- Three.js particle background
-- Responsive layout
-- Dynamic content loading from JSON
-- Smooth animations and transitions
-
-## Setup
-
-1. Open `index.html` in a browser, or
-2. Run a local server:
-   ```bash
-   python3 -m http.server 8000
-   ```
-3. Navigate to `http://localhost:8000`
+- **Typography**: Space Grotesk (headings) + Instrument Serif (body)
+- **Palette**: Deep black, warm off-white, vermillion accent
+- **Layout**: Numbered magazine-style sections, asymmetric grids, generous whitespace
+- **Motion**: Scroll-triggered reveals, CSS transitions, reduced-motion support
 
 ## Structure
 
-- `index.html` - Main HTML structure
-- `styles.css` - All styling
-- `main.js` - JavaScript logic and Three.js integration
-- `resume_data.json` - Portfolio data (experience, projects, skills)
-- `resume/` - PDF resume
-- `reference/` - Reference letter
+- `index.html` — Semantic markup with all content hardcoded
+- `styles.css` — Custom properties, responsive grid, grain overlay, animations
+- `main.js` — Scroll reveal (Intersection Observer), mobile nav, smooth scroll
+- `resume/` — PDF resume
+- `reference/` — Reference letter
 
-## Customization
+## Running Locally
 
-Edit `resume_data.json` to update your experience, projects, skills, and contact information.
+Open `index.html` directly, or start a local server:
 
+```bash
+python3 -m http.server 8000
+```
+
+Then visit `http://localhost:8000`.
