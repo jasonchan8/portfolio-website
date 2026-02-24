@@ -89,7 +89,9 @@ img {
     align-items: center;
     justify-content: space-between;
     padding: var(--space-sm) var(--space-md);
-    mix-blend-mode: difference;
+    background: rgba(12, 12, 12, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-name {

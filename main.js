@@ -21,6 +21,11 @@
         });
 
         document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+        // Reveal hero immediately so it's never blank on load
+        requestAnimationFrame(() => {
+            document.querySelectorAll('#hero [data-reveal]').forEach(el => el.classList.add('revealed'));
+        });
     }
 
     function initMobileNav() {
