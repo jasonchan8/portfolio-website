@@ -4,52 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jason Chan — Software Engineer</title>
-    <meta name="description" content="Jason Chan is a software engineer specializing in machine learning and full-stack systems.">
+    <meta name="description" content="Jason Chan is a software engineer specializing in machine learning and systems engineering. CS @ Northeastern, HackMIT Top 15, Teledyne FLIR intern.">
+    <meta name="theme-color" content="#0c0a0e">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='sans-serif' font-weight='bold' fill='%23d45d2c'>JC</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Grain overlay for atmosphere -->
     <div class="grain" aria-hidden="true"></div>
 
-    <!-- Navigation -->
     <header class="nav">
-        <a href="#hero" class="nav-name">Jason Chan</a>
-        <div class="nav-right">
-            <a href="resume/Jason_Chan_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-link">Resume</a>
+        <a href="#hero" class="nav-logo">JC</a>
+        <nav class="nav-links" role="navigation" aria-label="Main navigation">
+            <a href="#about" class="nav-link" data-section="about">About</a>
+            <a href="#work" class="nav-link" data-section="work">Work</a>
+            <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+            <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+            <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <a href="resume/Jason_Chan_Resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-resume">Resume</a>
             <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
                 <span></span>
                 <span></span>
             </button>
         </div>
-        <nav class="nav-menu" role="navigation">
-            <a href="#about" class="nav-menu-link">01 / About</a>
-            <a href="#work" class="nav-menu-link">02 / Work</a>
-            <a href="#experience" class="nav-menu-link">03 / Experience</a>
-            <a href="#skills" class="nav-menu-link">04 / Skills</a>
-            <a href="#contact" class="nav-menu-link">05 / Contact</a>
-        </nav>
     </header>
 
     <main>
 
         <!-- Hero -->
         <section id="hero" class="hero">
-            <div class="hero-inner">
-                <h1 class="hero-name" data-reveal>
-                    <span class="hero-name-line">Jason</span>
-                    <span class="hero-name-line">Chan</span>
+            <div class="hero-content">
+                <h1 class="hero-name">
+                    <span class="hero-name-line" data-reveal="clip">Jason</span>
+                    <span class="hero-name-line hero-name-accent" data-reveal="clip" data-delay="1">Chan</span>
                 </h1>
-                <div class="hero-meta" data-reveal data-delay="1">
-                    <p class="hero-subtitle">Software engineer specializing in machine learning and full-stack systems.</p>
-                    <p class="hero-location">Boston, MA &mdash; Northeastern University &rsquo;27</p>
+                <div class="hero-meta" data-reveal data-delay="2">
+                    <p class="hero-tagline">I build software at the intersection of machine learning and systems engineering.</p>
+                    <p class="hero-location">Boston, MA &mdash; Northeastern &rsquo;27</p>
                 </div>
-                <div class="hero-accent" aria-hidden="true"></div>
             </div>
-            <div class="hero-scroll" data-reveal data-delay="2">
+            <div class="hero-scroll" data-reveal data-delay="3">
                 <span>Scroll</span>
                 <div class="hero-scroll-line"></div>
             </div>
@@ -57,86 +56,140 @@
 
         <!-- About -->
         <section id="about" class="section">
-            <div class="section-grid">
-                <div class="section-label" data-reveal>
+            <div class="container aside-layout">
+                <div class="section-header" data-reveal>
                     <span class="section-number">01</span>
-                    <span class="section-divider">/</span>
-                    <span>About</span>
+                    <span class="section-name">About</span>
                 </div>
-                <div class="section-content" data-reveal data-delay="1">
-                    <p class="about-lead">I build things that think. Currently studying Computer Science at Northeastern (3.8 GPA), I spend most of my time at the intersection of machine learning and software engineering&mdash;training models, shipping full-stack apps, and figuring out how to make both work together in the real world.</p>
-                    <p class="about-body">I've built CNNs that classify sign language, shipped Android software controlling unmanned ground vehicles at Teledyne FLIR, and organized hackathons that brought 150+ students together. I got selected for HackMIT (top 15 of 500+), the X Developer Challenge (out of 1,000+ applicants), and was one of 25 worldwide Replit Student Ambassadors.</p>
-                    <p class="about-body">I care about writing clean systems, understanding problems deeply, and building software that actually matters.</p>
-                    <div class="about-links">
-                        <a href="reference/JasonChan-Reference.pdf" target="_blank" rel="noopener noreferrer" class="inline-link">Reference from my manager at Teledyne FLIR &rarr;</a>
-                    </div>
+                <div class="about-content">
+                    <p class="about-lead" data-reveal data-delay="1">I&rsquo;m drawn to problems where the model and the system have to work together &mdash; where training a network is only half the job.</p>
+                    <p class="about-body" data-reveal data-delay="2">I&rsquo;ve shipped software for defense robots, won hackathons, and organized events that brought hundreds of engineers into the same room. I care about depth over breadth, and building things that actually hold up.</p>
+                    <a href="reference/JasonChan-Reference.pdf" target="_blank" rel="noopener noreferrer" class="about-reference" data-reveal data-delay="3">Reference from my manager at Teledyne FLIR &rarr;</a>
                 </div>
             </div>
         </section>
 
         <!-- Work -->
         <section id="work" class="section">
-            <div class="section-grid">
-                <div class="section-label" data-reveal>
+            <div class="container">
+                <div class="section-header" data-reveal>
                     <span class="section-number">02</span>
-                    <span class="section-divider">/</span>
-                    <span>Selected Work</span>
+                    <span class="section-name">Selected Work</span>
                 </div>
-                <div class="section-content">
+                <div class="projects-grid">
 
-                    <article class="project" data-reveal>
-                        <div class="project-header">
-                            <h3 class="project-name">Cosign</h3>
-                            <span class="project-context">HackMIT &mdash; Top 15 of 500+</span>
-                        </div>
-                        <p class="project-description">Real-time ASL sign language recognition using a CNN with LSTMs, classifying 250+ motion-based signs. Webcam data streams via SocketIO between a Flask backend and React frontend. Trained on 90,000+ cleaned video samples.</p>
-                        <div class="project-stack">
-                            <span>TensorFlow</span>
-                            <span>Flask</span>
-                            <span>React</span>
-                            <span>SocketIO</span>
-                            <span>Python</span>
+                    <!-- Cosign — Featured -->
+                    <article class="project-card project-card--featured" data-reveal>
+                        <div class="project-visual project-visual--cosign" aria-hidden="true"></div>
+                        <div class="project-info">
+                            <div class="project-badge">HackMIT &mdash; Top 15 of 500+</div>
+                            <h3 class="project-title">Cosign</h3>
+                            <div class="project-details">
+                                <div class="project-detail">
+                                    <span class="detail-label">Problem</span>
+                                    <p>ASL speakers lack real-time digital tools that understand motion-based signs &mdash; most solutions only handle static fingerspelling.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Approach</span>
+                                    <p>CNN + LSTM pipeline classifying 250+ signs from live webcam data, streamed via Flask and SocketIO to a React frontend.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Result</span>
+                                    <p>Trained on <span class="metric" data-count="90000">90,000</span>+ video samples. Placed top 15 at MIT&rsquo;s flagship hackathon.</p>
+                                </div>
+                            </div>
+                            <div class="project-stack">
+                                <span>TensorFlow</span>
+                                <span>Flask</span>
+                                <span>React</span>
+                                <span>SocketIO</span>
+                                <span>Python</span>
+                            </div>
                         </div>
                     </article>
 
-                    <article class="project" data-reveal>
-                        <div class="project-header">
-                            <h3 class="project-name">Scam Detection Tool</h3>
-                            <span class="project-context">X Developer Challenge &mdash; Selected from 1,000+</span>
-                        </div>
-                        <p class="project-description">Built an ML pipeline that warns users of potential scam posts on their timeline. Fine-tuned an LLM using few-shot learning to classify tweets fetched via the X API in real time.</p>
-                        <div class="project-stack">
-                            <span>Python</span>
-                            <span>LLMs</span>
-                            <span>Few-Shot Learning</span>
-                            <span>X API</span>
+                    <!-- Scam Detection Tool -->
+                    <article class="project-card" data-reveal>
+                        <div class="project-visual project-visual--scam" aria-hidden="true"></div>
+                        <div class="project-info">
+                            <div class="project-badge">X Developer Challenge &mdash; Selected from 1,000+</div>
+                            <h3 class="project-title">Scam Detection Tool</h3>
+                            <div class="project-details">
+                                <div class="project-detail">
+                                    <span class="detail-label">Problem</span>
+                                    <p>Users have no real-time way to identify scam posts while scrolling their timeline.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Approach</span>
+                                    <p>Fine-tuned an LLM with few-shot learning to classify posts fetched live via the X API.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Result</span>
+                                    <p>Selected from <span class="metric" data-count="1000">1,000</span>+ submissions for the X Developer Challenge.</p>
+                                </div>
+                            </div>
+                            <div class="project-stack">
+                                <span>Python</span>
+                                <span>LLMs</span>
+                                <span>Few-Shot Learning</span>
+                                <span>X API</span>
+                            </div>
                         </div>
                     </article>
 
-                    <article class="project" data-reveal>
-                        <div class="project-header">
-                            <h3 class="project-name">Tesla Sentiment Analysis</h3>
-                        </div>
-                        <p class="project-description">NLP pipeline analyzing 10,000+ tweets to extract positive brand associations. Used VADER sentiment analysis with custom data cleaning&mdash;stopword removal and lemmatization&mdash;to surface meaningful patterns.</p>
-                        <div class="project-stack">
-                            <span>Python</span>
-                            <span>NLTK</span>
-                            <span>VADER</span>
-                            <span>NLP</span>
+                    <!-- Mask Verified -->
+                    <article class="project-card" data-reveal data-delay="1">
+                        <div class="project-visual project-visual--mask" aria-hidden="true"></div>
+                        <div class="project-info">
+                            <div class="project-badge">Best Covid-19 Hack Winner</div>
+                            <h3 class="project-title">Mask Verified</h3>
+                            <div class="project-details">
+                                <div class="project-detail">
+                                    <span class="detail-label">Problem</span>
+                                    <p>Public spaces needed automated mask compliance monitoring without manual oversight.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Approach</span>
+                                    <p>Trained a CNN to detect mask usage from facial landmarks in real time using TensorFlow and OpenCV.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Result</span>
+                                    <p>Won Best Covid-19 Hack. Achieved real-time inference on live video streams.</p>
+                                </div>
+                            </div>
+                            <div class="project-stack">
+                                <span>TensorFlow</span>
+                                <span>OpenCV</span>
+                                <span>Python</span>
+                            </div>
                         </div>
                     </article>
 
-                    <article class="project" data-reveal>
-                        <div class="project-header">
-                            <h3 class="project-name">Mask Verified</h3>
-                            <span class="project-context">Best Covid-19 Hack Winner</span>
-                        </div>
-                        <p class="project-description">Award-winning computer vision system that detects mask usage from facial landmarks in real time. Trained a CNN using TensorFlow to enhance public safety during the pandemic.</p>
-                        <div class="project-stack">
-                            <span>TensorFlow</span>
-                            <span>OpenCV</span>
-                            <span>Computer Vision</span>
-                            <span>Python</span>
+                    <!-- Tesla Sentiment Analysis -->
+                    <article class="project-card" data-reveal data-delay="2">
+                        <div class="project-visual project-visual--tesla" aria-hidden="true"></div>
+                        <div class="project-info">
+                            <h3 class="project-title">Tesla Sentiment Analysis</h3>
+                            <div class="project-details">
+                                <div class="project-detail">
+                                    <span class="detail-label">Problem</span>
+                                    <p>Understanding brand perception requires processing thousands of unstructured social posts.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Approach</span>
+                                    <p>NLP pipeline with VADER sentiment analysis and custom cleaning &mdash; stopword removal, lemmatization &mdash; to surface patterns.</p>
+                                </div>
+                                <div class="project-detail">
+                                    <span class="detail-label">Result</span>
+                                    <p>Processed <span class="metric" data-count="10000">10,000</span>+ tweets, extracting actionable brand sentiment data.</p>
+                                </div>
+                            </div>
+                            <div class="project-stack">
+                                <span>Python</span>
+                                <span>NLTK</span>
+                                <span>VADER</span>
+                                <span>NLP</span>
+                            </div>
                         </div>
                     </article>
 
@@ -146,38 +199,40 @@
 
         <!-- Experience -->
         <section id="experience" class="section">
-            <div class="section-grid">
-                <div class="section-label" data-reveal>
+            <div class="container aside-layout">
+                <div class="section-header" data-reveal>
                     <span class="section-number">03</span>
-                    <span class="section-divider">/</span>
-                    <span>Experience</span>
+                    <span class="section-name">Experience</span>
                 </div>
-                <div class="section-content">
+                <div class="timeline">
 
-                    <div class="exp-item" data-reveal>
-                        <div class="exp-date">Jan &ndash; Jun 2025</div>
-                        <div class="exp-details">
-                            <h3 class="exp-role">Software Engineering Intern</h3>
-                            <div class="exp-company">Teledyne FLIR &mdash; Unmanned Ground Systems</div>
-                            <p class="exp-summary">Built and maintained the full-stack Android/Java software powering a multi-robot control system. Applied Agile practices, JUnit testing, and peer review to ship features and resolve critical issues in a complex defense codebase.</p>
+                    <div class="timeline-item" data-reveal>
+                        <div class="timeline-date">Jan &ndash; Jun 2025</div>
+                        <div class="timeline-marker"><div class="timeline-dot"></div></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-role">Software Engineering Intern</h3>
+                            <div class="timeline-company">Teledyne FLIR &mdash; Unmanned Ground Systems</div>
+                            <p class="timeline-story">Shipped features and resolved critical bugs in the Android/Java software that operators use to control multi-robot defense systems in the field &mdash; learned what it means to write code that has to work every time.</p>
                         </div>
                     </div>
 
-                    <div class="exp-item" data-reveal>
-                        <div class="exp-date">Nov 2023 &ndash; Mar 2024</div>
-                        <div class="exp-details">
-                            <h3 class="exp-role">Executive Board Member</h3>
-                            <div class="exp-company">PawHacks</div>
-                            <p class="exp-summary">Organized the first student-led hackathon on Northeastern&rsquo;s Oakland campus. Led sponsorship efforts securing $15,000+, recruited 150+ participants from universities across the U.S.</p>
+                    <div class="timeline-item" data-reveal data-delay="1">
+                        <div class="timeline-date">Nov 2023 &ndash; Mar 2024</div>
+                        <div class="timeline-marker"><div class="timeline-dot"></div></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-role">Executive Board</h3>
+                            <div class="timeline-company">PawHacks</div>
+                            <p class="timeline-story">Built Northeastern Oakland&rsquo;s first hackathon from scratch &mdash; cold-emailed sponsors until we hit $15,000+, recruited 150+ participants, and proved a new campus could host a real event.</p>
                         </div>
                     </div>
 
-                    <div class="exp-item" data-reveal>
-                        <div class="exp-date">Aug &ndash; Dec 2022</div>
-                        <div class="exp-details">
-                            <h3 class="exp-role">Student Ambassador</h3>
-                            <div class="exp-company">Replit</div>
-                            <p class="exp-summary">Selected as 1 of 25 worldwide ambassadors. Hosted workshops and meetups teaching programming to 100+ students. Beta tested Ghostwriter AI before public launch.</p>
+                    <div class="timeline-item" data-reveal data-delay="2">
+                        <div class="timeline-date">Aug &ndash; Dec 2022</div>
+                        <div class="timeline-marker"><div class="timeline-dot"></div></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-role">Student Ambassador</h3>
+                            <div class="timeline-company">Replit</div>
+                            <p class="timeline-story">Selected as 1 of 25 worldwide &mdash; taught 100+ students to code and beta tested Ghostwriter AI months before public launch.</p>
                         </div>
                     </div>
 
@@ -187,61 +242,73 @@
 
         <!-- Skills -->
         <section id="skills" class="section">
-            <div class="section-grid">
-                <div class="section-label" data-reveal>
+            <div class="container">
+                <div class="section-header" data-reveal>
                     <span class="section-number">04</span>
-                    <span class="section-divider">/</span>
-                    <span>Skills</span>
+                    <span class="section-name">Skills</span>
                 </div>
-                <div class="section-content">
-                    <div class="skills-cloud" data-reveal>
-                        <span class="skill skill--lg">Python</span>
-                        <span class="skill skill--lg">TensorFlow</span>
-                        <span class="skill skill--lg">React</span>
-                        <span class="skill skill--md">Java</span>
-                        <span class="skill skill--md">JavaScript</span>
-                        <span class="skill skill--md">TypeScript</span>
-                        <span class="skill skill--md">PyTorch</span>
-                        <span class="skill skill--md">Node.js</span>
-                        <span class="skill skill--md">Docker</span>
-                        <span class="skill skill--md">PostgreSQL</span>
-                        <span class="skill skill--sm">C++</span>
-                        <span class="skill skill--sm">Kotlin</span>
-                        <span class="skill skill--sm">Rust</span>
-                        <span class="skill skill--sm">Go</span>
-                        <span class="skill skill--sm">C</span>
-                        <span class="skill skill--md">OpenCV</span>
-                        <span class="skill skill--md">NumPy</span>
-                        <span class="skill skill--sm">pandas</span>
-                        <span class="skill skill--md">Next.js</span>
-                        <span class="skill skill--sm">Vue</span>
-                        <span class="skill skill--sm">Angular</span>
-                        <span class="skill skill--sm">Spring</span>
-                        <span class="skill skill--md">Git</span>
-                        <span class="skill skill--sm">Linux</span>
-                        <span class="skill skill--md">Kubernetes</span>
-                        <span class="skill skill--sm">MongoDB</span>
-                        <span class="skill skill--sm">Azure</span>
-                        <span class="skill skill--sm">Apache Spark</span>
-                        <span class="skill skill--sm">NLTK</span>
-                        <span class="skill skill--sm">SQL</span>
-                        <span class="skill skill--sm">C#</span>
-                        <span class="skill skill--sm">Ruby</span>
+                <div class="skills-grid">
+
+                    <div class="skill-category" data-reveal>
+                        <h3 class="skill-category-title">ML & Data</h3>
+                        <ul class="skill-list">
+                            <li>Python</li>
+                            <li>TensorFlow</li>
+                            <li>PyTorch</li>
+                            <li>NumPy</li>
+                            <li>pandas</li>
+                            <li>NLTK</li>
+                            <li>OpenCV</li>
+                        </ul>
                     </div>
+
+                    <div class="skill-category" data-reveal data-delay="1">
+                        <h3 class="skill-category-title">Full-Stack</h3>
+                        <ul class="skill-list">
+                            <li>React</li>
+                            <li>Next.js</li>
+                            <li>Node.js</li>
+                            <li>TypeScript</li>
+                            <li>Flask</li>
+                            <li>PostgreSQL</li>
+                            <li>MongoDB</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category" data-reveal data-delay="2">
+                        <h3 class="skill-category-title">Systems & Infra</h3>
+                        <ul class="skill-list">
+                            <li>Java</li>
+                            <li>C++</li>
+                            <li>Docker</li>
+                            <li>Kubernetes</li>
+                            <li>Linux</li>
+                            <li>Git</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category skill-category--exploring" data-reveal data-delay="3">
+                        <h3 class="skill-category-title">Exploring</h3>
+                        <ul class="skill-list">
+                            <li>Rust</li>
+                            <li>Go</li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </section>
 
         <!-- Contact -->
         <section id="contact" class="section section--contact">
-            <div class="contact-inner" data-reveal>
-                <div class="section-label">
+            <div class="container">
+                <div class="section-header" data-reveal>
                     <span class="section-number">05</span>
-                    <span class="section-divider">/</span>
-                    <span>Contact</span>
+                    <span class="section-name">Contact</span>
                 </div>
-                <h2 class="contact-heading">Let&rsquo;s build something.</h2>
-                <div class="contact-links">
+                <h2 class="contact-heading" data-reveal data-delay="1">Let&rsquo;s build something.</h2>
+                <p class="contact-availability" data-reveal data-delay="2">Currently open to internships and new grad roles for 2027.</p>
+                <div class="contact-links" data-reveal data-delay="3">
                     <a href="mailto:chan.jaso@northeastern.edu" class="contact-link">chan.jaso@northeastern.edu</a>
                     <a href="https://linkedin.com/in/jasonchan8" target="_blank" rel="noopener noreferrer" class="contact-link">LinkedIn &nearr;</a>
                     <a href="resume/Jason_Chan_Resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-link">Resume &nearr;</a>
@@ -252,8 +319,10 @@
     </main>
 
     <footer class="footer">
-        <span>&copy; <span id="year"></span> Jason Chan</span>
-        <span>Built with intention.</span>
+        <div class="container footer-inner">
+            <span>&copy; <span id="year"></span> Jason Chan</span>
+            <span>Built with intention.</span>
+        </div>
     </footer>
 
     <script src="main.js"></script>

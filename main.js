@@ -1,10 +1,13 @@
 (() => {
     'use strict';
 
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     function initScrollReveal() {
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const elements = document.querySelectorAll('[data-reveal]');
+
         if (prefersReduced) {
-            document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('revealed'));
+            elements.forEach(el => el.classList.add('revealed'));
             return;
         }
 
@@ -16,35 +19,40 @@
                 }
             });
         }, {
-            threshold: 0.15,
+            threshold: 0.12,
             rootMargin: '0px 0px -40px 0px'
         });
 
-        document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+        elements.forEach(el => observer.observe(el));
 
-        // Reveal hero immediately so it's never blank on load
         requestAnimationFrame(() => {
-            document.querySelectorAll('#hero [data-reveal]').forEach(el => el.classList.add('revealed'));
+            document.querySelectorAll('.hero [data-reveal]').forEach(el => {
+                el.classList.add('revealed');
+            });
         });
     }
 
-    function initMobileNav() {
-        const toggle = document.querySelector('.nav-toggle');
-        const menu = document.querySelector('.nav-menu');
-        if (!toggle || !menu) return;
+    function initActiveNav() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link[data-section]');
 
-        toggle.addEventListener('click', () => {
-            const expanded = toggle.getAttribute('aria-expanded') === 'true';
-            toggle.setAttribute('aria-expanded', String(!expanded));
-            menu.classList.toggle('open');
-        });
+        if (!sections.length || !navLinks.length) return;
 
-        menu.querySelectorAll('.nav-menu-link').forEach(link => {
-            link.addEventListener('click', () => {
-                toggle.setAttribute('aria-expanded', 'false');
-                menu.classList.remove('open');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.dataset.section === id);
+                    });
+                }
             });
+        }, {
+            threshold: 0,
+            rootMargin: '-30% 0px -65% 0px'
         });
+
+        sections.forEach(section => observer.observe(section));
     }
 
     function initSmoothScroll() {
@@ -53,7 +61,86 @@
                 const target = document.querySelector(anchor.getAttribute('href'));
                 if (!target) return;
                 e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth' });
+                target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+            });
+        });
+    }
+
+    function initMobileNav() {
+        const toggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (!toggle || !navLinks) return;
+
+        toggle.addEventListener('click', () => {
+            const expanded = toggle.getAttribute('aria-expanded') === 'true';
+            toggle.setAttribute('aria-expanded', String(!expanded));
+            navLinks.classList.toggle('open');
+            document.body.classList.toggle('nav-open');
+        });
+
+        navLinks.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.setAttribute('aria-expanded', 'false');
+                navLinks.classList.remove('open');
+                document.body.classList.remove('nav-open');
+            });
+        });
+    }
+
+    function initCounters() {
+        if (prefersReduced) return;
+
+        const counters = document.querySelectorAll('.metric[data-count]');
+        if (!counters.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => observer.observe(counter));
+    }
+
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1200;
+        const start = performance.now();
+
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(eased * target);
+            el.textContent = current.toLocaleString();
+            if (progress < 1) requestAnimationFrame(update);
+        }
+
+        requestAnimationFrame(update);
+    }
+
+    function initProjectParallax() {
+        if (prefersReduced) return;
+        if (window.matchMedia('(hover: none)').matches) return;
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            const visual = card.querySelector('.project-visual');
+            if (!visual) return;
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                visual.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                visual.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+                visual.style.transform = 'translate(0, 0)';
+                setTimeout(() => { visual.style.transition = ''; }, 400);
             });
         });
     }
@@ -68,5 +155,8 @@
         initSmoothScroll();
         initMobileNav();
         initScrollReveal();
+        initActiveNav();
+        initCounters();
+        initProjectParallax();
     });
 })();
