@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jason Chan, software engineer</title>
+<meta name="description" content="Jason Chan is a software engineering intern at DraftKings, previously at Visa and Teledyne FLIR, studying computer science at Northeastern with a B.S. expected in May 2027.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://www.jasonchan.codes/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.jasonchan.codes/">
+<meta property="og:title" content="Jason Chan, software engineer">
+<meta property="og:description" content="Software engineering intern at DraftKings, previously at Visa and Teledyne FLIR. Northeastern computer science, May 2027.">
+<meta property="og:image" content="https://www.jasonchan.codes/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Jason Chan, software engineer, jasonchan.codes">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23f7f5ef'/%3E%3Cpath d='M23 3v26' stroke='%23a8321f' stroke-width='2'/%3E%3Cpath d='M7 9h11M7 15h11M7 21h8' stroke='%231d1c1a' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/serif-text.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/serif-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/serif-italic.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: "JC Serif"; src: url(fonts/serif-text.woff2) format("woff2"); font-weight: 340 650; font-style: normal; font-display: swap; }
+@font-face { font-family: "JC Serif"; src: url(fonts/serif-italic.woff2) format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "JC Serif Display"; src: url(fonts/serif-display.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JC Serif Fallback"; src: local("Georgia"); size-adjust: 100.77%; ascent-override: 102.81%; descent-override: 33.24%; line-gap-override: 0.00%; }
+
+:root {
+  color-scheme: light dark;
+  --paper: #f7f5ef;
+  --ink: #1d1c1a;
+  --ink-2: #5b574f;
+  --rule: #d6d0c4;
+  --red: #a8321f;
+  --underline: #b4ab9c;
+  --text-weight: 400;
+  --serif: "JC Serif", "JC Serif Fallback", Charter, "Iowan Old Style", Georgia, serif;
+  --display: "JC Serif Display", "JC Serif", Charter, Georgia, serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #161513;
+    --ink: #e6e1d5;
+    --ink-2: #a59e91;
+    --rule: #3a362f;
+    --red: #ec8a71;
+    --underline: #6f685d;
+    --text-weight: 370;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-weight: var(--text-weight);
+  line-height: 1.6;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: color-mix(in srgb, var(--red) 24%, transparent); }
+
+a { color: inherit; text-decoration: underline 1px var(--underline); text-underline-offset: .2em; transition: text-decoration-color .15s; }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 1px; }
+
+.skip { position: absolute; left: 1rem; top: -5rem; z-index: 1; padding: .5rem .8rem; background: var(--ink); color: var(--paper); text-decoration: none; }
+.skip:focus { top: 1rem; }
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.sheet { max-width: 41rem; margin-inline: auto; padding-inline: clamp(1rem, 5vw, 2rem); }
+
+p { margin: 0 0 .9rem; text-wrap: pretty; }
+b { font-weight: 620; }
+.k { font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; color: var(--ink); margin-right: .3em; }
+.fmt { font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--ink-2); }
+
+.masthead { padding-block: clamp(2.5rem, 9vh, 6.5rem) 0; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.5rem, 1.75rem + 2.4vw, 3.4rem); line-height: 1.05; letter-spacing: -.012em; margin: 0 0 .8rem; }
+.standfirst { font-size: 1.1875rem; line-height: 1.45; margin: 0 0 1.1rem; max-width: 34rem; text-wrap: balance; }
+.links { list-style: none; margin: 0 0 1.75rem; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; }
+.links a { overflow-wrap: anywhere; }
+
+.note { font-size: .9375rem; line-height: 1.45; color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; margin: -.2rem 0 1.15rem; padding-left: .75rem; border-left: 1px solid var(--red); }
+.meta { margin: 0 0 .9rem; padding: 0; border: 0; }
+.meta span + span::before { content: "\00b7\00a0"; content: "\00b7\00a0" / ""; }
+.meta .when, .meta .term { color: var(--ink); }
+
+.terms { margin: 0 0 1rem; padding: 0; border: 0; }
+.terms .k { display: block; margin-bottom: .45rem; }
+.gantt { list-style: none; margin: 0; padding: 0; }
+.gantt li { margin-bottom: .4rem; }
+.gantt .who { display: block; font-size: .875rem; line-height: 1.3; white-space: nowrap; padding-left: calc(var(--from) / var(--months) * 100%); }
+.gantt .end .who { padding-left: 0; text-align: right; padding-right: calc((var(--months) - var(--from) - var(--len)) / var(--months) * 100%); }
+.gantt .bar { display: block; height: .4rem; margin-top: .2rem; margin-left: calc(var(--from) / var(--months) * 100%); width: calc(var(--len) / var(--months) * 100%); background: var(--ink); }
+.gantt .open .bar { -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent); mask-image: linear-gradient(90deg, #000 40%, transparent); }
+.gantt .grad .bar { background: none; border: 1px solid var(--ink); }
+.axis { position: relative; height: 1.3rem; border-top: 1px solid var(--rule); font-size: .75rem; line-height: 1.3rem; color: var(--ink-2); }
+.axis span { position: absolute; top: 0; left: calc(var(--at) / var(--months) * 100%); padding-left: .2rem; border-left: 1px solid var(--rule); }
+
+h2 { font-size: 1.0625rem; font-weight: 620; line-height: 1.3; font-variant-caps: all-small-caps; letter-spacing: .09em; color: var(--ink-2); margin: 3.25rem 0 1.4rem; padding-top: .7rem; border-top: 1px solid var(--rule); }
+.entry { margin-top: 2.6rem; }
+h2 + .entry { margin-top: 0; }
+h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.008em; margin: 0; }
+.role { font-style: italic; color: var(--ink-2); margin: .1rem 0 .55rem; }
+.lede { margin-bottom: 1.15rem; }
+
+.fig { margin: .2rem 0 1.4rem; container-type: inline-size; font-size: .9375rem; line-height: 1.4; font-variant-numeric: lining-nums tabular-nums; }
+.fig figcaption { font-style: italic; color: var(--ink-2); padding-bottom: .35rem; }
+.fig fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.fig-note { font-size: .9375rem; line-height: 1.45; color: var(--ink-2); margin: .55rem 0 0; }
+.draw { display: contents; }
+.map { --hue: var(--ink); display: grid; grid-template-columns: .85rem max-content 1fr; column-gap: .75rem; border-block: 1.5px solid var(--ink); padding-bottom: .5rem; }
+.map::before { content: ""; grid-area: 1 / 1 / 2 / -1; border-bottom: 1px solid var(--rule); }
+.hd { grid-row: 1; margin: 0; padding: .38rem 0; font-size: .875rem; font-weight: 620; font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--ink-2); }
+.hd.mid, .out.merged, .wire { display: none; }
+.in { grid-column: 1 / -1; display: flex; align-items: center; gap: .6rem; margin-top: .55rem; cursor: pointer; }
+.in input { margin: 0; flex: none; width: 1rem; height: 1rem; accent-color: var(--ink); cursor: pointer; }
+.in:has(:focus-visible) { outline: 2px solid var(--red); outline-offset: 2px; }
+.in input:focus-visible { outline: none; }
+.old { grid-column: 2; }
+.new { grid-column: 3; }
+.out, .guess { justify-self: start; margin: .1rem 0 0 -.3rem; padding: .05rem .3rem; outline: 1.5px solid transparent; }
+.out { font-family: var(--mono); font-size: .875rem; color: var(--ink-2); }
+.guess { font-style: italic; }
+.bug, .guess { --hue: var(--red); color: var(--red); }
+.in.r1 { grid-row: 2; } .r1:is(.out, .guess) { grid-row: 3; }
+.in.r2 { grid-row: 4; } .r2:is(.out, .guess) { grid-row: 5; }
+.in.r3 { grid-row: 6; } .r3:is(.out, .guess) { grid-row: 7; }
+.map:has(.r1 :checked) .r1:is(.out, .guess, path),
+.map:has(.r2 :checked) .r2:is(.out, .guess, path),
+.map:has(.r3 :checked) .r3:is(.out, .guess, path) { color: var(--hue); outline-color: var(--hue); stroke: var(--hue); stroke-width: 2px; }
+
+@container (width >= 34rem) {
+  .map { grid-template-columns: auto minmax(1.5rem, 1fr) auto minmax(1.5rem, 1fr) auto; grid-template-rows: auto repeat(var(--rows), minmax(2.75rem, 1fr)); column-gap: 0; padding-bottom: 0; }
+  .hd { font-size: 1em; }
+  .hd.old { grid-column: 1; text-align: right; }
+  .hd.mid { display: block; grid-column: 3; text-align: center; }
+  .hd.new { grid-column: 5; }
+  .in { grid-column: 3; margin: 0; align-self: center; --line: 1px; --line-color: var(--rule); }
+  .in::before, .in::after { content: ""; flex: 1 0 .75rem; border-top: var(--line) solid var(--line-color); }
+  .in::before { flex-grow: 0; }
+  .in.guessed::before { border-top: var(--line) dashed var(--red); }
+  .map:has(.r1 :checked) .in.r1, .map:has(.r2 :checked) .in.r2, .map:has(.r3 :checked) .in.r3 { --line: 2px; --line-color: var(--ink); }
+  .in.r1, .r1:is(.out, .guess) { grid-row: 2; }
+  .in.r2, .r2:is(.out, .guess) { grid-row: 3; }
+  .in.r3, .r3:is(.out, .guess) { grid-row: 4; }
+  .old { grid-column: 1; justify-self: end; }
+  .new { grid-column: 5; }
+  .out, .guess { align-self: center; margin: 0 .25rem; }
+  .out.split { display: none; }
+  .out.merged { display: block; grid-row: 2 / -1; font-size: 1.25rem; }
+  .wire { display: block; grid-row: 2 / -1; width: 100%; height: 100%; overflow: visible; }
+  .wire.l { grid-column: 2; }
+  .wire.r { grid-column: 4; }
+  .wire path { fill: none; stroke: var(--rule); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+  .wire path.bug { stroke: var(--red); stroke-dasharray: 4 3; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .out, .guess, .wire path { transition: color .2s, outline-color .2s, stroke .2s, stroke-width .2s; }
+  /* Two keyframe names let the shared 0 restart its ring when the pick moves between rows. */
+  .map:focus-within:has(.r1 :checked) .r1:is(.out, .guess) { animation: reread-a .6s ease-out; }
+  .map:focus-within:has(.r2 :checked) .r2:is(.out, .guess) { animation: reread-b .6s ease-out; }
+  .map:focus-within:has(.r3 :checked) .r3:is(.out, .guess) { animation: reread-a .6s ease-out; }
+}
+@keyframes reread-a { from { box-shadow: 0 0 0 0 var(--hue); } to { box-shadow: 0 0 0 .5rem transparent; } }
+@keyframes reread-b { from { box-shadow: 0 0 0 0 var(--hue); } to { box-shadow: 0 0 0 .5rem transparent; } }
+
+.quote { margin-top: 0; }
+.quote blockquote { margin: 0 0 .35rem; color: var(--ink); font-style: italic; }
+.quote blockquote p { margin: 0; }
+
+.skills { margin: 0; }
+.skills div { margin-bottom: .45rem; }
+.skills dt { display: inline; font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; margin-right: .35em; }
+.skills dd { display: inline; margin: 0; }
+
+footer { padding-bottom: 4rem; }
+.colophon { border-left-color: var(--rule); }
+.copy { display: inline-grid; padding: 0 .4rem; font: inherit; font-size: .9375rem; line-height: 1.45; font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--ink-2); background: none; border: 1px solid var(--rule); border-radius: 2px; cursor: pointer; }
+.copy[hidden] { display: none; }
+.copy span { grid-area: 1 / 1; }
+.copy [aria-hidden] { visibility: hidden; }
+.copy:hover { color: var(--ink); border-color: var(--ink-2); }
+
+@media (min-width: 62rem) {
+  @supports (grid-template-columns: subgrid) {
+    body { font-size: 1.125rem; }
+    .standfirst { font-size: 1.3125rem; }
+    .sheet { max-width: none; display: grid; grid-template-columns: minmax(0, 37rem) minmax(13rem, 16rem); column-gap: clamp(2.5rem, 5vw, 4.5rem); justify-content: center; align-items: baseline; }
+    .sub { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: baseline; }
+    .sheet > *, .sub > * { grid-column: 1; }
+    .sheet > .sub, .sub > .sub, .sheet > h2, .sub > h2 { grid-column: 1 / -1; }
+    .sheet > .note, .sub > .note { grid-column: 2; margin: 0 0 1rem; }
+    .meta, .terms { padding-left: .75rem; border-left: 1px solid var(--red); }
+    .meta { grid-row: span 2; }
+    .meta span { display: block; }
+    .meta span + span::before { content: none; }
+    .terms { align-self: end; margin-bottom: 1.75rem; }
+    .lede { margin-bottom: 1.1rem; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+@media print {
+  :root { --paper: #fff; --ink: #000; --ink-2: #333; }
+  .skip, .copy { display: none; }
+  body { font-size: 10.5pt; }
+  .gantt .bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  figure { break-inside: avoid; }
+  .links a[href^="http"]::after, .links a[href^="mailto"]::after { content: " (" attr(href) ")"; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="sheet masthead">
+  <div class="intro">
+    <h1>Jason Chan</h1>
+    <p class="standfirst">Software engineering intern at DraftKings, previously at Visa and Teledyne FLIR. I study computer science at Northeastern and expect my B.S. in May 2027.</p>
+    <ul class="links">
+      <li><a href="resume/Jason_Chan_Resume.pdf">Résumé <span class="fmt">PDF</span></a></li>
+      <li><a href="mailto:chan.jaso@northeastern.edu">chan.jaso@northeastern.edu</a></li>
+      <li><a href="https://linkedin.com/in/jasonchan8">LinkedIn</a></li>
+      <li><a href="reference/JasonChan-Reference.pdf">Reference letter <span class="fmt">PDF</span></a></li>
+    </ul>
+  </div>
+  <figure class="note terms" style="--months: 29">
+    <figcaption class="k">Full-time terms, to scale</figcaption>
+    <ol class="gantt">
+      <li style="--from: 0; --len: 6"><span class="who">Teledyne FLIR, 6 months</span><span class="bar"></span></li>
+      <li class="end" style="--from: 16; --len: 3"><span class="who">Visa, 3 months</span><span class="bar"></span></li>
+      <li class="end open" style="--from: 19; --len: 5"><span class="who">DraftKings, 5 months</span><span class="bar"></span></li>
+      <li class="end grad" style="--from: 28; --len: 1"><span class="who">B.S., May 2027</span><span class="bar"></span></li>
+    </ol>
+    <div class="axis" aria-hidden="true"><span style="--at: 0">2025</span><span style="--at: 12">2026</span><span style="--at: 24">2027</span></div>
+  </figure>
+</header>
+
+<main id="main" class="sheet">
+  <section class="sub" aria-labelledby="summary">
+    <h2 id="summary">Summary</h2>
+    <p>Three of my changes are about state. At Teledyne FLIR, a missing battery and a drained one both parsed to 0, so I gave each its own value. At Visa, I designed a compliance validator with three outcomes, so ambiguous input goes to human review instead of a guessed pass or fail. I also put three progress displays on one state model so they cannot disagree. The battery and the validator each have a figure below, where you can switch between the cases.</p>
+    <p class="note">Notes like this one give dates, stack, and the evidence for each change.</p>
+  </section>
+
+  <section class="sub" aria-labelledby="experience">
+    <h2 id="experience">Experience</h2>
+
+    <article class="sub entry" id="draftkings">
+      <div class="head"><h3>DraftKings</h3><p class="role">Software Engineering Intern, Casino Native</p></div>
+      <p class="note meta"><span class="when">Aug 2026 to present</span> <span class="term">5 months, full-time</span> <span>Boston, MA</span> <span>Kotlin, Android, Datadog</span></p>
+      <p class="lede">I am building an unreleased player-facing feature in DraftKings’ Android casino app as its sole engineer. I also merged bug fixes in three of the company’s consumer apps.</p>
+      <p><b>Plan.</b> I built a proof of concept, then turned it into a technical plan. The plan settles the client architecture and the API contract, which I worked out with product and platform engineers.</p>
+      <p class="note"><span class="k">Status</span> The team approved the plan.</p>
+      <p><b>Build.</b> I am implementing the plan in scoped tickets. The feature ships behind a feature flag, so the team can enable it for a slice of players and turn it off without cutting a release.</p>
+      <p class="note"><span class="k">Scope</span> 5 tickets, one engineer.</p>
+      <p><b>Fixes.</b> I merged Kotlin bug fixes in Casino, Sportsbook, and Golden Nugget Online Casino. They include layout defects and gaps in Datadog logging that were hiding failures in production.</p>
+      <p class="note"><span class="k">Merged</span> 10 fixes across three apps.</p>
+    </article>
+
+    <article class="sub entry" id="visa">
+      <div class="head"><h3>Visa</h3><p class="role">Software Engineering Intern, Payment Product Development</p></div>
+      <p class="note meta"><span class="when">May 2026 to Jul 2026</span> <span class="term">3 months, full-time</span> <span>Foster City, CA</span></p>
+      <p class="lede">I worked on the onboarding flow for Visa’s cross-border settlement. I added an LLM assistant to the form, designed a rules validator for compliance attestations, and rebuilt the form’s progress tracking.</p>
+      <p><b>Assistant.</b> The LLM-powered assistant tells applicants what each country requires for a given form field, so they can finish without leaving the page to look it up.</p>
+      <p class="note"><span class="k">Covers</span> 4 countries.</p>
+      <p><b>Validator.</b> The validator resolves requirements per account tier and returns three outcomes instead of two. Ambiguous input goes to human review instead of a guessed pass or fail.</p>
+      <p class="note"><span class="k">Verified</span> 127 unit tests.</p>
+      <figure class="fig" id="validator" aria-describedby="validator-note">
+        <figcaption>Outcome by input, two-outcome design against three</figcaption>
+        <fieldset>
+          <legend class="vh">Input</legend>
+          <div class="map" style="--rows: 3">
+            <div class="draw" aria-hidden="true">
+              <p class="hd old">Two outcomes</p>
+              <p class="hd mid">Input</p>
+              <p class="hd new">Three outcomes</p>
+            </div>
+            <label class="in r1"><input type="radio" name="validator" value="meets">Meets requirements<span class="vh">. With two outcomes, pass. With three outcomes, pass.</span></label>
+            <label class="in r2"><input type="radio" name="validator" value="fails">Fails requirements<span class="vh">. With two outcomes, fail. With three outcomes, fail.</span></label>
+            <label class="in r3 guessed"><input type="radio" name="validator" value="ambiguous" checked>Ambiguous<span class="vh">. With two outcomes, a forced guess between pass and fail. With three outcomes, human review.</span></label>
+            <div class="draw" aria-hidden="true">
+              <p class="out old r1">pass</p>
+              <p class="out old r2">fail</p>
+              <p class="guess old r3">forced to guess</p>
+              <svg class="wire l" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path class="r1" d="M100 16.67H0"/>
+                <path class="r2" d="M100 50H0"/>
+                <path class="r3 bug" d="M100 83.33C55 83.33 45 16.67 0 16.67"/>
+                <path class="r3 bug" d="M100 83.33C55 83.33 45 50 0 50"/>
+              </svg>
+              <svg class="wire r" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path class="r1" d="M0 16.67H100"/>
+                <path class="r2" d="M0 50H100"/>
+                <path class="r3" d="M0 83.33H100"/>
+              </svg>
+              <p class="out new r1">pass</p>
+              <p class="out new r2">fail</p>
+              <p class="out new r3">human review</p>
+            </div>
+          </div>
+        </fieldset>
+        <p class="fig-note" id="validator-note">A pass-or-fail validator has to turn an ambiguous attestation into a guess, and the guess can be wrong either way. The validator I designed returns a third outcome and sends that attestation to a person.</p>
+      </figure>
+      <p><b>Progress.</b> The progress bar, the checklist, and the needs-attention count now derive from one state model. Prefilled defaults do not count, so the number shows only what the applicant still has to do.</p>
+      <p class="note"><span class="k">Invariant</span> The three displays cannot disagree.</p>
+    </article>
+
+    <article class="sub entry" id="teledyne-flir">
+      <div class="head"><h3>Teledyne FLIR</h3><p class="role">Software Engineering Intern, Unmanned Ground Systems</p></div>
+      <p class="note meta"><span class="when">Jan 2025 to Jun 2025</span> <span class="term">6 months, full-time</span> <span>Billerica, MA</span> <span>Android, JUnit, REST, Linux</span></p>
+      <p class="lede">I worked on FLIR’s 100K-line Android operator console and on real-time telemetry and video streaming pipelines on Linux.</p>
+      <p><b>Battery state.</b> A missing battery and a drained one both parsed to 0, so field operators could not tell a charger problem from a dead cell. Nobody had filed the defect. I traced it and replaced the integer with a typed enum across parsing, UI alerts, and the REST health endpoints.</p>
+      <p class="note"><span class="k">Verified</span> JUnit coverage on every transition.</p>
+      <figure class="fig" id="battery" aria-describedby="battery-note">
+        <figcaption>Battery state as the console parsed it</figcaption>
+        <fieldset>
+          <legend class="vh">Battery</legend>
+          <div class="map" style="--rows: 2">
+            <div class="draw" aria-hidden="true">
+              <p class="hd old">As an integer</p>
+              <p class="hd mid">Battery</p>
+              <p class="hd new">As a typed enum</p>
+            </div>
+            <label class="in r1"><input type="radio" name="battery" value="missing" checked>Missing<span class="vh">. As an integer, 0. As a typed enum, missing.</span></label>
+            <label class="in r2"><input type="radio" name="battery" value="drained">Drained<span class="vh">. As an integer, 0. As a typed enum, drained.</span></label>
+            <div class="draw" aria-hidden="true">
+              <p class="out old bug merged r1 r2">0</p>
+              <p class="out old bug split r1">0</p>
+              <p class="out old bug split r2">0</p>
+              <svg class="wire l" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path class="r1" d="M100 25C55 25 45 50 0 50"/>
+                <path class="r2" d="M100 75C55 75 45 50 0 50"/>
+              </svg>
+              <svg class="wire r" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path class="r1" d="M0 25H100"/>
+                <path class="r2" d="M0 75H100"/>
+              </svg>
+              <p class="out new r1">missing</p>
+              <p class="out new r2">drained</p>
+            </div>
+          </div>
+        </fieldset>
+        <p class="fig-note" id="battery-note">Switch between the two. Read as an integer, both land on the same 0, so an operator cannot tell a charger problem from a dead cell. Read as a typed enum, each keeps its own state through parsing, UI alerts, and the REST health endpoints.</p>
+      </figure>
+      <figure class="note quote">
+        <blockquote><p>“Jason’s performance was excellent and I highly recommend him.”</p></blockquote>
+        <figcaption>Susan Macchia, Senior Manager, Software Engineering, Teledyne FLIR. <a href="reference/JasonChan-Reference.pdf">Full letter <span class="fmt">PDF</span></a></figcaption>
+      </figure>
+      <p><b>Pipelines.</b> I fixed 40+ concurrency and memory-leak defects in those pipelines.</p>
+      <p class="note"><span class="k">Result</span> Reported system failures fell 70%.</p>
+    </article>
+  </section>
+
+  <section class="sub" aria-labelledby="projects">
+    <h2 id="projects">Projects</h2>
+
+    <article class="sub entry" id="cosign">
+      <div class="head"><h3>Cosign</h3><p class="role">HackMIT</p></div>
+      <p class="note meta"><span class="when">Sept 2025</span> <span class="term">Top 15 of 500+ teams</span> <span>C++, Python, TensorFlow, Flask, SocketIO</span></p>
+      <p class="lede">An ASL gesture recognition system that serves classifications over Flask and SocketIO at sub-200ms inference latency.</p>
+      <p><b>Build.</b> I trained a CNN+LSTM pipeline on 90K+ frames across 250+ gestures. I added request batching and async processing to hold latency under concurrent load.</p>
+    </article>
+
+    <article class="sub entry" id="scam-post-classifier">
+      <div class="head"><h3>Scam-post classifier</h3><p class="role">X (Twitter) Developer Challenge</p></div>
+      <p class="note meta"><span class="when">Apr 2024</span> <span class="term">Selected from 1,000+ applicants</span> <span>Built on-site at X HQ over a weekend</span> <span>Python, LLMs, X API, Chrome Extension</span></p>
+      <p class="lede">It pulls a user’s timeline through the X API and flags likely scams with a few-shot LLM. A Chrome extension shows the candidates for the user to judge instead of hiding posts on their behalf.</p>
+      <p><b>Scoring.</b> I wrote the Python pipeline that scored the classifier against 10K+ labeled examples.</p>
+    </article>
+  </section>
+
+  <section class="sub" aria-labelledby="education">
+    <h2 id="education">Education</h2>
+    <article class="sub entry" id="northeastern">
+      <div class="head"><h3>Northeastern University</h3><p class="role">B.S. in Computer Science, Khoury College of Computer Sciences</p></div>
+      <p class="note meta"><span class="when">Expected May 2027</span> <span>Boston, MA</span> <span>GPA 3.8 / 4.0</span></p>
+    </article>
+  </section>
+
+  <section class="sub" aria-labelledby="skills">
+    <h2 id="skills">Skills</h2>
+    <dl class="skills">
+      <div><dt>Languages</dt><dd>Java, Kotlin, Python, C++, C, TypeScript, JavaScript, SQL</dd></div>
+      <div><dt>Platforms and infrastructure</dt><dd>Android, Linux/Unix, Docker, AWS, Jenkins, Datadog, Bash</dd></div>
+      <div><dt>Frameworks and APIs</dt><dd>React, Node.js, Flask, TensorFlow, Spring Boot, RESTful APIs</dd></div>
+      <div><dt>Data and testing</dt><dd>PostgreSQL, MongoDB, JUnit</dd></div>
+    </dl>
+  </section>
+</main>
+
+<footer class="sheet">
+  <h2 id="contact">Contact</h2>
+  <p>Email <a id="email" href="mailto:chan.jaso@northeastern.edu">chan.jaso@northeastern.edu</a> <button type="button" class="copy" hidden><span>Copy</span><span aria-hidden="true">Copied</span><span aria-hidden="true">Selected</span></button><span class="vh" id="copy-status" role="status"></span> or message me on <a href="https://linkedin.com/in/jasonchan8">LinkedIn</a>. My <a href="resume/Jason_Chan_Resume.pdf">résumé</a> and a <a href="reference/JasonChan-Reference.pdf">reference letter from Teledyne FLIR</a> are PDFs.</p>
+  <p class="note colophon">Set in JC Serif, a subset of Adobe’s Source Serif 4. Plain HTML and CSS. The only script copies the email address. Every number on this page appears on my résumé.</p>
+</footer>
+<script>
+(() => {
+  const button = document.querySelector('.copy');
+  const status = document.getElementById('copy-status');
+  const email = document.getElementById('email');
+  const [label, , refusedWidth] = button.children;
+  const idle = label.textContent;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const [keys, spoken] = /Mac|iPhone|iPad/.test(navigator.platform) ? ['Cmd+C', 'Command C'] : ['Ctrl+C', 'Control C'];
+  const refused = fine ? keys : 'Selected';
+  let timer;
+
+  const show = (text, message) => {
+    label.textContent = text;
+    status.textContent = message;
+    clearTimeout(timer);
+    timer = setTimeout(() => { label.textContent = idle; status.textContent = ''; }, 2600);
+  };
+
+  refusedWidth.textContent = refused;
+  button.hidden = false;
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(email.textContent);
+      show('Copied', 'Email address copied.');
+    } catch {
+      getSelection().selectAllChildren(email);
+      show(refused, fine ? `Address selected. Press ${spoken} to copy it.` : 'Address selected.');
+    }
+  });
+})();
+</script>
+</body>
+</html>
