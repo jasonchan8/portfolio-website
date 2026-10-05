@@ -80,7 +80,6 @@ a:hover { text-decoration-color: currentColor; }
 .sheet { max-width: 41rem; margin-inline: auto; padding-inline: clamp(1rem, 5vw, 2rem); }
 
 p { margin: 0 0 .9rem; text-wrap: pretty; }
-.k { font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; color: var(--ink); margin-right: .3em; }
 .fmt { font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--ink-2); }
 
 .masthead { padding-block: clamp(2.5rem, 9vh, 6.5rem) 0; }
@@ -94,17 +93,14 @@ h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.5rem, 1.7
 .meta span + span::before { content: "\00b7\00a0"; content: "\00b7\00a0" / ""; }
 .meta .when, .meta .term { color: var(--ink); }
 
-.terms { margin: 0 0 1rem; padding: 0; border: 0; }
-.terms .k { display: block; margin-bottom: .45rem; }
-.gantt { list-style: none; margin: 0; padding: 0; }
-.gantt li { margin-bottom: .4rem; }
-.gantt .who { display: block; font-size: .875rem; line-height: 1.3; white-space: nowrap; padding-left: calc(var(--from) / var(--months) * 100%); }
-.gantt .end .who { padding-left: 0; text-align: right; padding-right: calc((var(--months) - var(--from) - var(--len)) / var(--months) * 100%); }
-.gantt .bar { display: block; height: .4rem; margin-top: .2rem; margin-left: calc(var(--from) / var(--months) * 100%); width: calc(var(--len) / var(--months) * 100%); background: var(--ink); }
-.gantt .open .bar { -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent); mask-image: linear-gradient(90deg, #000 40%, transparent); }
-.gantt .grad .bar { background: none; border: 1px solid var(--ink); }
-.axis { position: relative; height: 1.3rem; border-top: 1px solid var(--rule); font-size: .75rem; line-height: 1.3rem; color: var(--ink-2); }
-.axis span { position: absolute; top: 0; left: calc(var(--at) / var(--months) * 100%); padding-left: .2rem; border-left: 1px solid var(--rule); }
+.stat { color: var(--ink); }
+.stat p { margin: 0 0 .8rem; font-size: 1rem; line-height: 1.3; }
+/* A block here would make Chrome drop this paragraph from its accessibility tree, so screen readers would no longer get the number and caption as one sentence. */
+.stat .total { display: inline-block; width: 100%; margin-bottom: .35rem; font-size: 4.25rem; line-height: .9; font-variant-numeric: lining-nums; }
+.stat .caption { font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; }
+.stat ol { list-style: none; margin: 0; padding: 0; }
+.stat li { display: flex; justify-content: space-between; gap: 1rem; padding: .3rem 0; border-top: 1px solid var(--rule); }
+.stat small { font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--red); font-size: .9em; }
 
 h2 { font-size: 1.0625rem; font-weight: 620; line-height: 1.3; font-variant-caps: all-small-caps; letter-spacing: .09em; color: var(--ink-2); margin: 3.25rem 0 1.4rem; padding-top: .7rem; border-top: 1px solid var(--rule); }
 .entry { margin-top: 2.6rem; }
@@ -114,64 +110,6 @@ h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.00
 .bullets { margin: 0 0 .9rem; padding-left: 1.1em; text-wrap: pretty; }
 .bullets li + li { margin-top: .75rem; }
 .bullets li::marker { color: var(--ink-2); }
-
-.fig { margin: .2rem 0 1.4rem; container-type: inline-size; font-size: .9375rem; line-height: 1.4; font-variant-numeric: lining-nums tabular-nums; }
-.fig figcaption { font-style: italic; color: var(--ink-2); padding-bottom: .35rem; }
-.fig fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
-.fig-note { font-size: .9375rem; line-height: 1.45; color: var(--ink-2); margin: .55rem 0 0; }
-.draw { display: contents; }
-.map { --hue: var(--ink); display: grid; grid-template-columns: .85rem max-content 1fr; column-gap: .75rem; border-block: 1.5px solid var(--ink); padding-bottom: .5rem; }
-.map::before { content: ""; grid-area: 1 / 1 / 2 / -1; border-bottom: 1px solid var(--rule); }
-.hd { grid-row: 1; margin: 0; padding: .38rem 0; font-size: .875rem; font-weight: 620; font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--ink-2); }
-.hd.mid, .wire { display: none; }
-.in { grid-column: 1 / -1; display: flex; align-items: center; gap: .6rem; margin-top: .55rem; cursor: pointer; }
-.in input { margin: 0; flex: none; width: 1rem; height: 1rem; accent-color: var(--ink); cursor: pointer; }
-.in:has(:focus-visible) { outline: 2px solid var(--red); outline-offset: 2px; }
-.in input:focus-visible { outline: none; }
-.old { grid-column: 2; }
-.new { grid-column: 3; }
-.out, .guess { justify-self: start; margin: .1rem 0 0 -.3rem; padding: .05rem .3rem; outline: 1.5px solid transparent; }
-.out { font-family: var(--mono); font-size: .875rem; color: var(--ink-2); }
-.guess { font-style: italic; }
-.bug, .guess { --hue: var(--red); color: var(--red); }
-.in.r1 { grid-row: 2; } .r1:is(.out, .guess) { grid-row: 3; }
-.in.r2 { grid-row: 4; } .r2:is(.out, .guess) { grid-row: 5; }
-.in.r3 { grid-row: 6; } .r3:is(.out, .guess) { grid-row: 7; }
-.map:has(.r1 :checked) .r1:is(.out, .guess, path),
-.map:has(.r2 :checked) .r2:is(.out, .guess, path),
-.map:has(.r3 :checked) .r3:is(.out, .guess, path) { color: var(--hue); outline-color: var(--hue); stroke: var(--hue); stroke-width: 2px; }
-
-@container (width >= 34rem) {
-  .map { grid-template-columns: auto minmax(1.5rem, 1fr) auto minmax(1.5rem, 1fr) auto; grid-template-rows: auto repeat(var(--rows), minmax(2.75rem, 1fr)); column-gap: 0; padding-bottom: 0; }
-  .hd { font-size: 1em; }
-  .hd.old { grid-column: 1; text-align: right; }
-  .hd.mid { display: block; grid-column: 3; text-align: center; }
-  .hd.new { grid-column: 5; }
-  .in { grid-column: 3; margin: 0; align-self: center; --line: 1px; --line-color: var(--rule); }
-  .in::before, .in::after { content: ""; flex: 1 0 .75rem; min-width: .75rem; border-top: var(--line) solid var(--line-color); }
-  .in::before { flex-grow: 0; }
-  .in.guessed::before { border-top: var(--line) dashed var(--red); }
-  .map:has(.r1 :checked) .in.r1, .map:has(.r2 :checked) .in.r2, .map:has(.r3 :checked) .in.r3 { --line: 2px; --line-color: var(--ink); }
-  .in.r1, .r1:is(.out, .guess) { grid-row: 2; }
-  .in.r2, .r2:is(.out, .guess) { grid-row: 3; }
-  .in.r3, .r3:is(.out, .guess) { grid-row: 4; }
-  .old { grid-column: 1; justify-self: end; }
-  .new { grid-column: 5; }
-  .out, .guess { align-self: center; margin: 0 .25rem; }
-  .wire { display: block; grid-row: 2 / -1; width: 100%; height: 100%; overflow: visible; }
-  .wire.l { grid-column: 2; }
-  .wire.r { grid-column: 4; }
-  .wire path { fill: none; stroke: var(--rule); stroke-width: 1px; vector-effect: non-scaling-stroke; }
-  .wire path.bug { stroke: var(--red); stroke-dasharray: 4 3; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .out, .guess, .wire path { transition: color .2s, outline-color .2s, stroke .2s, stroke-width .2s; }
-  .map:focus-within:has(.r1 :checked) .r1:is(.out, .guess),
-  .map:focus-within:has(.r2 :checked) .r2:is(.out, .guess),
-  .map:focus-within:has(.r3 :checked) .r3:is(.out, .guess) { animation: reread .6s ease-out; }
-}
-@keyframes reread { from { box-shadow: 0 0 0 0 var(--hue); } to { box-shadow: 0 0 0 .5rem transparent; } }
 
 .quote { margin-top: 0; }
 .quote blockquote { margin: 0 0 .35rem; color: var(--ink); font-style: italic; }
@@ -199,13 +137,11 @@ footer { padding-bottom: 4rem; }
     .sheet > *, .sub > * { grid-column: 1; }
     .sheet > .sub, .sub > .sub, .sheet > h2, .sub > h2 { grid-column: 1 / -1; }
     .sheet > .note, .sub > .note { grid-column: 2; margin: 0 0 1rem; }
-    .meta, .terms { padding-left: .75rem; border-left: 1px solid var(--red); }
-    .meta { grid-row: span 2; }
+    .meta { grid-row: span 2; padding-left: .75rem; border-left: 1px solid var(--red); }
     /* A note cannot share the meta's second row, so the element in that row spans the third too and the note stacks under the meta. */
     .meta + :has(+ .note) { grid-row: span 2; }
     .meta span { display: block; }
     .meta span + span::before { content: none; }
-    .terms { align-self: end; margin-bottom: 1.75rem; }
   }
 }
 
@@ -217,7 +153,6 @@ footer { padding-bottom: 4rem; }
   :root { --paper: #fff; --ink: #000; --ink-2: #333; }
   .skip, .copy { display: none; }
   body { font-size: 10.5pt; }
-  .gantt .bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   figure { break-inside: avoid; }
   .links a[href^="http"]::after, .links a[href^="mailto"]::after { content: " (" attr(href) ")"; }
 }
@@ -237,16 +172,14 @@ footer { padding-bottom: 4rem; }
       <li><a href="reference/JasonChan-Reference.pdf">Reference letter <span class="fmt">PDF</span></a></li>
     </ul>
   </div>
-  <figure class="note terms" style="--months: 29">
-    <figcaption class="k">Full-time terms, to scale</figcaption>
-    <ol class="gantt">
-      <li style="--from: 0; --len: 6"><span class="who">Teledyne FLIR, 6 months</span><span class="bar"></span></li>
-      <li class="end" style="--from: 16; --len: 3"><span class="who">Visa, 3 months</span><span class="bar"></span></li>
-      <li class="end open" style="--from: 19; --len: 5"><span class="who">DraftKings, 5 months</span><span class="bar"></span></li>
-      <li class="end grad" style="--from: 28; --len: 1"><span class="who">B.S., May 2027</span><span class="bar"></span></li>
+  <div class="note stat">
+    <p><span class="total">14</span> <span class="caption">months of full-time software engineering</span></p>
+    <ol>
+      <li><span>DraftKings</span> <span>5<span class="vh"> months</span> <small>now</small></span></li>
+      <li><span>Visa</span> <span>3<span class="vh"> months</span></span></li>
+      <li><span>Teledyne FLIR</span> <span>6<span class="vh"> months</span></span></li>
     </ol>
-    <div class="axis" aria-hidden="true"><span style="--at: 0">2025</span><span style="--at: 12">2026</span><span style="--at: 24">2027</span></div>
-  </figure>
+  </div>
 </header>
 
 <main id="main" class="sheet">
@@ -269,44 +202,6 @@ footer { padding-bottom: 4rem; }
       <ul class="bullets">
         <li>Built an LLM-powered assistant into Visa’s cross-border settlement onboarding flow that tells applicants what each of 4 countries requires for a given form field, so they finish without leaving the page to look it up.</li>
         <li>Designed a rules validator for compliance attestations that resolves requirements per account tier and returns three outcomes instead of two, routing ambiguous input to human review instead of guessing a wrong pass or fail; verified with 127 unit tests.</li>
-      </ul>
-      <figure class="fig" id="validator" aria-describedby="validator-note">
-        <figcaption>Outcome by input, two-outcome design against three</figcaption>
-        <fieldset>
-          <legend class="vh">Input</legend>
-          <div class="map" style="--rows: 3">
-            <div class="draw" aria-hidden="true">
-              <p class="hd old">Two outcomes</p>
-              <p class="hd mid">Input</p>
-              <p class="hd new">Three outcomes</p>
-            </div>
-            <label class="in r1"><input type="radio" name="validator" value="meets">Meets requirements<span class="vh">. With two outcomes, pass. With three outcomes, pass.</span></label>
-            <label class="in r2"><input type="radio" name="validator" value="fails">Fails requirements<span class="vh">. With two outcomes, fail. With three outcomes, fail.</span></label>
-            <label class="in r3 guessed"><input type="radio" name="validator" value="ambiguous" checked>Ambiguous<span class="vh">. With two outcomes, a forced guess between pass and fail. With three outcomes, human review.</span></label>
-            <div class="draw" aria-hidden="true">
-              <p class="out old r1">pass</p>
-              <p class="out old r2">fail</p>
-              <p class="guess old r3">forced to guess</p>
-              <svg class="wire l" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path class="r1" d="M100 16.67H0"/>
-                <path class="r2" d="M100 50H0"/>
-                <path class="r3 bug" d="M100 83.33C55 83.33 45 16.67 0 16.67"/>
-                <path class="r3 bug" d="M100 83.33C55 83.33 45 50 0 50"/>
-              </svg>
-              <svg class="wire r" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path class="r1" d="M0 16.67H100"/>
-                <path class="r2" d="M0 50H100"/>
-                <path class="r3" d="M0 83.33H100"/>
-              </svg>
-              <p class="out new r1">pass</p>
-              <p class="out new r2">fail</p>
-              <p class="out new r3">human review</p>
-            </div>
-          </div>
-        </fieldset>
-        <p class="fig-note" id="validator-note">A pass-or-fail validator has to turn an ambiguous attestation into a guess, and the guess can be wrong either way. The validator I designed returns a third outcome and sends that attestation to a person.</p>
-      </figure>
-      <ul class="bullets">
         <li>Rebuilt the form’s progress tracking so the progress bar, checklist, and needs-attention count all derive from one state model and cannot disagree; excluded prefilled defaults so the count reflects only what the user still has to do.</li>
       </ul>
     </article>
@@ -368,7 +263,7 @@ footer { padding-bottom: 4rem; }
 <footer class="sheet">
   <h2 id="contact">Contact</h2>
   <p>Email <a id="email" href="mailto:chan.jaso@northeastern.edu">chan.jaso@northeastern.edu</a> <button type="button" class="copy" hidden><span>Copy</span><span aria-hidden="true">Copied</span><span aria-hidden="true">Selected</span></button><span class="vh" id="copy-status" role="status"></span> or message me on <a href="https://linkedin.com/in/jasonchan8">LinkedIn</a>. My <a href="resume/Jason_Chan_Resume.pdf">résumé</a> and a <a href="reference/JasonChan-Reference.pdf">reference letter from Teledyne FLIR</a> are PDFs.</p>
-  <p class="note colophon">Set in JC Serif, a subset of Adobe’s Source Serif 4. Plain HTML and CSS. The only script copies the email address. Every number on this page appears on my résumé.</p>
+  <p class="note colophon">Set in JC Serif, a subset of Adobe’s Source Serif 4. Plain HTML and CSS. The only script copies the email address. Every number on this page comes from my résumé.</p>
 </footer>
 <script>
 (() => {
