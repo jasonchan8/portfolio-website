@@ -80,7 +80,6 @@ a:hover { text-decoration-color: currentColor; }
 .sheet { max-width: 41rem; margin-inline: auto; padding-inline: clamp(1rem, 5vw, 2rem); }
 
 p { margin: 0 0 .9rem; text-wrap: pretty; }
-b { font-weight: 620; }
 .k { font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; color: var(--ink); margin-right: .3em; }
 .fmt { font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--ink-2); }
 
@@ -112,7 +111,9 @@ h2 { font-size: 1.0625rem; font-weight: 620; line-height: 1.3; font-variant-caps
 h2 + .entry { margin-top: 0; }
 h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.008em; margin: 0; }
 .role { font-style: italic; color: var(--ink-2); margin: .1rem 0 .55rem; }
-.lede { margin-bottom: 1.15rem; }
+.bullets { margin: 0 0 .9rem; padding-left: 1.1em; text-wrap: pretty; }
+.bullets li + li { margin-top: .75rem; }
+.bullets li::marker { color: var(--ink-2); }
 
 .fig { margin: .2rem 0 1.4rem; container-type: inline-size; font-size: .9375rem; line-height: 1.4; font-variant-numeric: lining-nums tabular-nums; }
 .fig figcaption { font-style: italic; color: var(--ink-2); padding-bottom: .35rem; }
@@ -122,7 +123,7 @@ h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.00
 .map { --hue: var(--ink); display: grid; grid-template-columns: .85rem max-content 1fr; column-gap: .75rem; border-block: 1.5px solid var(--ink); padding-bottom: .5rem; }
 .map::before { content: ""; grid-area: 1 / 1 / 2 / -1; border-bottom: 1px solid var(--rule); }
 .hd { grid-row: 1; margin: 0; padding: .38rem 0; font-size: .875rem; font-weight: 620; font-variant-caps: all-small-caps; letter-spacing: .05em; color: var(--ink-2); }
-.hd.mid, .out.merged, .wire { display: none; }
+.hd.mid, .wire { display: none; }
 .in { grid-column: 1 / -1; display: flex; align-items: center; gap: .6rem; margin-top: .55rem; cursor: pointer; }
 .in input { margin: 0; flex: none; width: 1rem; height: 1rem; accent-color: var(--ink); cursor: pointer; }
 .in:has(:focus-visible) { outline: 2px solid var(--red); outline-offset: 2px; }
@@ -157,8 +158,6 @@ h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.00
   .old { grid-column: 1; justify-self: end; }
   .new { grid-column: 5; }
   .out, .guess { align-self: center; margin: 0 .25rem; }
-  .out.split { display: none; }
-  .out.merged { display: block; grid-row: 2 / -1; font-size: 1.25rem; }
   .wire { display: block; grid-row: 2 / -1; width: 100%; height: 100%; overflow: visible; }
   .wire.l { grid-column: 2; }
   .wire.r { grid-column: 4; }
@@ -168,13 +167,11 @@ h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.00
 
 @media (prefers-reduced-motion: no-preference) {
   .out, .guess, .wire path { transition: color .2s, outline-color .2s, stroke .2s, stroke-width .2s; }
-  /* Two keyframe names let the shared 0 restart its ring when the pick moves between rows. */
-  .map:focus-within:has(.r1 :checked) .r1:is(.out, .guess) { animation: reread-a .6s ease-out; }
-  .map:focus-within:has(.r2 :checked) .r2:is(.out, .guess) { animation: reread-b .6s ease-out; }
-  .map:focus-within:has(.r3 :checked) .r3:is(.out, .guess) { animation: reread-a .6s ease-out; }
+  .map:focus-within:has(.r1 :checked) .r1:is(.out, .guess),
+  .map:focus-within:has(.r2 :checked) .r2:is(.out, .guess),
+  .map:focus-within:has(.r3 :checked) .r3:is(.out, .guess) { animation: reread .6s ease-out; }
 }
-@keyframes reread-a { from { box-shadow: 0 0 0 0 var(--hue); } to { box-shadow: 0 0 0 .5rem transparent; } }
-@keyframes reread-b { from { box-shadow: 0 0 0 0 var(--hue); } to { box-shadow: 0 0 0 .5rem transparent; } }
+@keyframes reread { from { box-shadow: 0 0 0 0 var(--hue); } to { box-shadow: 0 0 0 .5rem transparent; } }
 
 .quote { margin-top: 0; }
 .quote blockquote { margin: 0 0 .35rem; color: var(--ink); font-style: italic; }
@@ -204,10 +201,11 @@ footer { padding-bottom: 4rem; }
     .sheet > .note, .sub > .note { grid-column: 2; margin: 0 0 1rem; }
     .meta, .terms { padding-left: .75rem; border-left: 1px solid var(--red); }
     .meta { grid-row: span 2; }
+    /* A note cannot share the meta's second row, so the element in that row spans the third too and the note stacks under the meta. */
+    .meta + :has(+ .note) { grid-row: span 2; }
     .meta span { display: block; }
     .meta span + span::before { content: none; }
     .terms { align-self: end; margin-bottom: 1.75rem; }
-    .lede { margin-bottom: 1.1rem; }
   }
 }
 
@@ -252,35 +250,26 @@ footer { padding-bottom: 4rem; }
 </header>
 
 <main id="main" class="sheet">
-  <section class="sub" aria-labelledby="summary">
-    <h2 id="summary">Summary</h2>
-    <p>Three of my changes are about state. At Teledyne FLIR, a missing battery and a drained one both parsed to 0, so I gave each its own value. At Visa, I designed a compliance validator with three outcomes, so ambiguous input goes to human review instead of a guessed pass or fail. I also put three progress displays on one state model so they cannot disagree. The battery and the validator each have a figure below, where you can switch between the cases.</p>
-    <p class="note">Notes like this one give dates, stack, and the evidence for each change.</p>
-  </section>
-
   <section class="sub" aria-labelledby="experience">
     <h2 id="experience">Experience</h2>
 
     <article class="sub entry" id="draftkings">
       <div class="head"><h3>DraftKings</h3><p class="role">Software Engineering Intern, Casino Native</p></div>
       <p class="note meta"><span class="when">Aug 2026 to present</span> <span class="term">5 months, full-time</span> <span>Boston, MA</span> <span>Kotlin, Android, Datadog</span></p>
-      <p class="lede">I am building an unreleased player-facing feature in DraftKings’ Android casino app as its sole engineer. I also merged bug fixes in three of the company’s consumer apps.</p>
-      <p><b>Plan.</b> I built a proof of concept, then turned it into a technical plan. The plan settles the client architecture and the API contract, which I worked out with product and platform engineers.</p>
-      <p class="note"><span class="k">Status</span> The team approved the plan.</p>
-      <p><b>Build.</b> I am implementing the plan in scoped tickets. The feature ships behind a feature flag, so the team can enable it for a slice of players and turn it off without cutting a release.</p>
-      <p class="note"><span class="k">Scope</span> 5 tickets, one engineer.</p>
-      <p><b>Fixes.</b> I merged Kotlin bug fixes in Casino, Sportsbook, and Golden Nugget Online Casino. They include layout defects and gaps in Datadog logging that were hiding failures in production.</p>
-      <p class="note"><span class="k">Merged</span> 10 fixes across three apps.</p>
+      <ul class="bullets">
+        <li>Built a proof of concept for an unreleased player-facing feature in DraftKings’ Android casino app, then turned it into the technical plan the team approved, settling the client architecture and API contract with product and platform engineers.</li>
+        <li>Implementing that plan as the sole engineer across 5 scoped tickets, shipping behind a feature flag so the team can enable it for a slice of players and turn it off without cutting a release.</li>
+        <li>Merged 10 Kotlin bug fixes across three of DraftKings’ consumer apps, Casino, Sportsbook, and Golden Nugget Online Casino, ranging from layout defects to gaps in Datadog logging that were hiding failures in production.</li>
+      </ul>
     </article>
 
     <article class="sub entry" id="visa">
       <div class="head"><h3>Visa</h3><p class="role">Software Engineering Intern, Payment Product Development</p></div>
       <p class="note meta"><span class="when">May 2026 to Jul 2026</span> <span class="term">3 months, full-time</span> <span>Foster City, CA</span></p>
-      <p class="lede">I worked on the onboarding flow for Visa’s cross-border settlement. I added an LLM assistant to the form, designed a rules validator for compliance attestations, and rebuilt the form’s progress tracking.</p>
-      <p><b>Assistant.</b> The LLM-powered assistant tells applicants what each country requires for a given form field, so they can finish without leaving the page to look it up.</p>
-      <p class="note"><span class="k">Covers</span> 4 countries.</p>
-      <p><b>Validator.</b> The validator resolves requirements per account tier and returns three outcomes instead of two. Ambiguous input goes to human review instead of a guessed pass or fail.</p>
-      <p class="note"><span class="k">Verified</span> 127 unit tests.</p>
+      <ul class="bullets">
+        <li>Built an LLM-powered assistant into Visa’s cross-border settlement onboarding flow that tells applicants what each of 4 countries requires for a given form field, so they finish without leaving the page to look it up.</li>
+        <li>Designed a rules validator for compliance attestations that resolves requirements per account tier and returns three outcomes instead of two, routing ambiguous input to human review instead of guessing a wrong pass or fail; verified with 127 unit tests.</li>
+      </ul>
       <figure class="fig" id="validator" aria-describedby="validator-note">
         <figcaption>Outcome by input, two-outcome design against three</figcaption>
         <fieldset>
@@ -317,53 +306,21 @@ footer { padding-bottom: 4rem; }
         </fieldset>
         <p class="fig-note" id="validator-note">A pass-or-fail validator has to turn an ambiguous attestation into a guess, and the guess can be wrong either way. The validator I designed returns a third outcome and sends that attestation to a person.</p>
       </figure>
-      <p><b>Progress.</b> The progress bar, the checklist, and the needs-attention count now derive from one state model. Prefilled defaults do not count, so the number shows only what the applicant still has to do.</p>
-      <p class="note"><span class="k">Invariant</span> The three displays cannot disagree.</p>
+      <ul class="bullets">
+        <li>Rebuilt the form’s progress tracking so the progress bar, checklist, and needs-attention count all derive from one state model and cannot disagree; excluded prefilled defaults so the count reflects only what the user still has to do.</li>
+      </ul>
     </article>
 
     <article class="sub entry" id="teledyne-flir">
       <div class="head"><h3>Teledyne FLIR</h3><p class="role">Software Engineering Intern, Unmanned Ground Systems</p></div>
       <p class="note meta"><span class="when">Jan 2025 to Jun 2025</span> <span class="term">6 months, full-time</span> <span>Billerica, MA</span> <span>Android, JUnit, REST, Linux</span></p>
-      <p class="lede">I worked on FLIR’s 100K-line Android operator console and on real-time telemetry and video streaming pipelines on Linux.</p>
-      <p><b>Battery state.</b> A missing battery and a drained one both parsed to 0, so field operators could not tell a charger problem from a dead cell. Nobody had filed the defect. I traced it and replaced the integer with a typed enum across parsing, UI alerts, and the REST health endpoints.</p>
-      <p class="note"><span class="k">Verified</span> JUnit coverage on every transition.</p>
-      <figure class="fig" id="battery" aria-describedby="battery-note">
-        <figcaption>Battery state as the console parsed it</figcaption>
-        <fieldset>
-          <legend class="vh">Battery</legend>
-          <div class="map" style="--rows: 2">
-            <div class="draw" aria-hidden="true">
-              <p class="hd old">As an integer</p>
-              <p class="hd mid">Battery</p>
-              <p class="hd new">As a typed enum</p>
-            </div>
-            <label class="in r1"><input type="radio" name="battery" value="missing" checked>Missing<span class="vh">. As an integer, 0. As a typed enum, missing.</span></label>
-            <label class="in r2"><input type="radio" name="battery" value="drained">Drained<span class="vh">. As an integer, 0. As a typed enum, drained.</span></label>
-            <div class="draw" aria-hidden="true">
-              <p class="out old bug merged r1 r2">0</p>
-              <p class="out old bug split r1">0</p>
-              <p class="out old bug split r2">0</p>
-              <svg class="wire l" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path class="r1" d="M100 25C55 25 45 50 0 50"/>
-                <path class="r2" d="M100 75C55 75 45 50 0 50"/>
-              </svg>
-              <svg class="wire r" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path class="r1" d="M0 25H100"/>
-                <path class="r2" d="M0 75H100"/>
-              </svg>
-              <p class="out new r1">missing</p>
-              <p class="out new r2">drained</p>
-            </div>
-          </div>
-        </fieldset>
-        <p class="fig-note" id="battery-note">Switch between the two. Read as an integer, both land on the same 0, so an operator cannot tell a charger problem from a dead cell. Read as a typed enum, each keeps its own state through parsing, UI alerts, and the REST health endpoints.</p>
-      </figure>
+      <ul class="bullets">
+        <li>Fixed 40+ concurrency and memory-leak defects across real-time telemetry and video streaming pipelines on Linux, cutting reported system failures by 70%.</li>
+      </ul>
       <figure class="note quote">
         <blockquote><p>“Jason’s performance was excellent and I highly recommend him.”</p></blockquote>
         <figcaption>Susan Macchia, Senior Manager, Software Engineering, Teledyne FLIR. <a href="reference/JasonChan-Reference.pdf">Full letter <span class="fmt">PDF</span></a></figcaption>
       </figure>
-      <p><b>Pipelines.</b> I fixed 40+ concurrency and memory-leak defects in those pipelines.</p>
-      <p class="note"><span class="k">Result</span> Reported system failures fell 70%.</p>
     </article>
   </section>
 
@@ -373,15 +330,19 @@ footer { padding-bottom: 4rem; }
     <article class="sub entry" id="cosign">
       <div class="head"><h3>Cosign</h3><p class="role">HackMIT</p></div>
       <p class="note meta"><span class="when">Sept 2025</span> <span class="term">Top 15 of 500+ teams</span> <span>C++, Python, TensorFlow, Flask, SocketIO</span></p>
-      <p class="lede">An ASL gesture recognition system that serves classifications over Flask and SocketIO at sub-200ms inference latency.</p>
-      <p><b>Build.</b> I trained a CNN+LSTM pipeline on 90K+ frames across 250+ gestures. I added request batching and async processing to hold latency under concurrent load.</p>
+      <ul class="bullets">
+        <li>Built an ASL gesture recognition system serving classifications over Flask and SocketIO at sub-200ms inference latency; placed top 15 of 500+ teams at HackMIT.</li>
+        <li>Trained a CNN+LSTM pipeline on 90K+ frames across 250+ gestures; added request batching and async processing to hold latency under concurrent load.</li>
+      </ul>
     </article>
 
     <article class="sub entry" id="scam-post-classifier">
       <div class="head"><h3>Scam-post classifier</h3><p class="role">X (Twitter) Developer Challenge</p></div>
       <p class="note meta"><span class="when">Apr 2024</span> <span class="term">Selected from 1,000+ applicants</span> <span>Built on-site at X HQ over a weekend</span> <span>Python, LLMs, X API, Chrome Extension</span></p>
-      <p class="lede">It pulls a user’s timeline through the X API and flags likely scams with a few-shot LLM. A Chrome extension shows the candidates for the user to judge instead of hiding posts on their behalf.</p>
-      <p><b>Scoring.</b> I wrote the Python pipeline that scored the classifier against 10K+ labeled examples.</p>
+      <ul class="bullets">
+        <li>Built a scam-post classifier for X that pulls a user’s timeline through the X API and flags likely scams with a few-shot LLM, surfacing candidates in a Chrome extension for the user to judge instead of hiding posts on their behalf.</li>
+        <li>Wrote the Python pipeline that scored the classifier against 10K+ labeled examples; selected from 1,000+ applicants to build on-site at X HQ over a weekend.</li>
+      </ul>
     </article>
   </section>
 

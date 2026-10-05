@@ -19,13 +19,15 @@ Every entry has this shape. Copy an existing `<article>` and edit it:
 <article class="sub entry" id="org">
   <div class="head"><h3>Org</h3><p class="role">Title, Team</p></div>
   <p class="note meta"><span class="when">Mon YYYY to Mon YYYY</span> <span class="term">N months, full-time</span> <span>City, ST</span> <span>Stack</span></p>
-  <p class="lede">A line or two that stand alone.</p>
-  <p><b>Label.</b> The claim.</p>
-  <p class="note"><span class="k">Kind</span> The evidence.</p>
+  <ul class="bullets">
+    <li>A bullet from resume.tex.</li>
+  </ul>
 </article>
 ```
 
-- Put each note directly after the paragraph it supports. On screens 62rem and wider, a CSS subgrid places a note in the margin on the row of the paragraph before it. A note anywhere else lands beside the wrong paragraph, and two notes in a row leave a gap in the reading column. At 1440px, `npm run verify` fails when a note is the first child of its parent, follows another note, or sits more than 8px from the top of the element before it.
+- Copy the entry's bullets from `resume.tex` word for word, in the resume's order. Convert only the LaTeX. Write `\%` as `%`, `--` as "to", and a straight apostrophe as ’. Drop `\textbar{}`.
+- Put the meta note directly after `.head`. On screens 62rem and wider, a CSS subgrid places notes in the margin. The meta note spans the rows of the head and the first bullets list. Put any other note, such as the reference-letter quote in the Teledyne FLIR entry, directly after the element it supports. The note sits in the margin on that element's row. After the first bullets list, the meta note already fills that row, so the note stacks directly under the meta note. Two notes in a row leave a gap in the reading column.
+- At 1440px, `npm run verify` fails when a note is the first child of its parent or follows another note. It also fails when a note sits more than 8px from both the top of the element before it and the bottom margin of the note above it.
 - Take every fact from the resume. `npm run verify` fails when the page shows a number that `resume.tex` does not contain.
 - `npm run verify` also takes each employer, title, and date from the `\entry` lines in `resume.tex`, and each project and date from the `\project` lines. A new resume entry fails verify until the page has it.
 - For a full-time term, also add a row to the terms chart.
@@ -54,18 +56,18 @@ The chart in the masthead draws each full-time term to scale. Each row is one `<
 
 ## Edit a figure
 
-The battery and validator figures have one radio per row. CSS highlights the readings of the checked row, so the figures need no script.
+The validator figure has one radio per row. CSS highlights the readings of the checked row, so the figure needs no script.
 
 - A figure holds at most three rows. The stylesheet has rules for the row classes `r1`, `r2`, and `r3` only.
 - `--rows` on the figure's `.map` must equal its number of radios. `npm run verify` fails when they differ.
-- Each wire is an SVG path in a `0 0 100 100` viewBox. For row k of n rows, the path's y-coordinate is `(2k - 1) / (2n) * 100`. Three rows sit at 16.67, 50, and 83.33, and two rows sit at 25 and 75. A path to an output that spans every row, such as the battery's shared 0, ends at 50.
+- Each wire is an SVG path in a `0 0 100 100` viewBox. For row k of n rows, the path's y-coordinate is `(2k - 1) / (2n) * 100`. Three rows sit at 16.67, 50, and 83.33, and two rows sit at 25 and 75.
 
 ## When the DraftKings term ends
 
 Three places say that the term is current. Change them in one commit:
 
 1. The masthead. The standfirst, `<meta name="description">`, and `og:description` say "intern at DraftKings".
-2. The DraftKings entry. Its `.when` reads "Aug 2026 to present", its `.term` gives the length, and its lede and its Build paragraph are in the present tense.
+2. The DraftKings entry. Its `.when` reads "Aug 2026 to present", and its `.term` gives the length. Its second bullet is in the present tense. Change the bullets in `resume.tex` first, then copy them again.
 3. The chart row. Remove `class="open"`, and set `--len` and the label to the final number of months.
 
 Then run `npm run verify`. `og.png` names no employer, so it stays as it is.

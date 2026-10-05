@@ -214,8 +214,13 @@ function misplacedNotes(page) {
     const what = `"${note.textContent.trim().replace(/\s+/g, ' ').slice(0, 40)}"`;
     if (!prev) return [`${what} is the first child of its parent`];
     if (prev.matches('.note')) return [`${what} follows another note`];
-    const drift = Math.abs(note.getBoundingClientRect().top - prev.getBoundingClientRect().top);
-    return drift > 8 ? [`${what} sits ${Math.round(drift)}px from the top of the element before it`] : [];
+    const top = note.getBoundingClientRect().top;
+    const drift = Math.abs(top - prev.getBoundingClientRect().top);
+    if (drift <= 8) return [];
+    let above = prev.previousElementSibling;
+    while (above && !above.matches('.note')) above = above.previousElementSibling;
+    const slack = above ? Math.abs(top - above.getBoundingClientRect().bottom - parseFloat(getComputedStyle(above).marginBottom)) : Infinity;
+    return slack > 8 ? [`${what} sits ${Math.round(drift)}px from the top of the element before it and ${above ? `${Math.round(slack)}px from the bottom margin of the note above it` : 'has no note above it'}`] : [];
   }));
 }
 
