@@ -54,14 +54,6 @@ The chart in the masthead draws each full-time term to scale. Each row is one `<
 - An axis label's `--at` is not `(year - start) * 12`, where `start` is the year of the label at `--at: 0`.
 - A bar's width is off by more than 1px.
 
-## Edit a figure
-
-The validator figure has one radio per row. CSS highlights the readings of the checked row, so the figure needs no script.
-
-- A figure holds at most three rows. The stylesheet has rules for the row classes `r1`, `r2`, and `r3` only.
-- `--rows` on the figure's `.map` must equal its number of radios. `npm run verify` fails when they differ.
-- Each wire is an SVG path in a `0 0 100 100` viewBox. For row k of n rows, the path's y-coordinate is `(2k - 1) / (2n) * 100`. Three rows sit at 16.67, 50, and 83.33, and two rows sit at 25 and 75.
-
 ## When the DraftKings term ends
 
 Three places say that the term is current. Change them in one commit:

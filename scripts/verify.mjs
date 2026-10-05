@@ -25,7 +25,6 @@ const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844, isMobile: true, hasTouch: true },
   { name: 'narrow', width: 320, height: 640, isMobile: true, hasTouch: true },
 ];
-const FIGURE_WIRES = { 1440: true, 320: false };
 const FORBIDDEN = ['github.com/jasonchan8'];
 const PHONE = '8572894686';
 
@@ -132,20 +131,6 @@ function checkTermBars(t, where) {
   });
 }
 
-function checkHighlights(figure, where, radios, states) {
-  const fails = [];
-  states[0].forEach((el, i) => {
-    if (!states.every((s) => s[i].shown)) return;
-    const inRow = radios.map((r) => el.rows.includes(r.row));
-    const on = new Set(states.filter((_, k) => inRow[k]).map((s) => s[i].look));
-    const off = new Set(states.filter((_, k) => !inRow[k]).map((s) => s[i].look));
-    if (on.size > 1 || off.size > 1 || [...on].some((look) => off.has(look))) {
-      fails.push(`figure ${figure} at ${where}: ${el.name} does not follow the radios for rows ${el.rows.join(', ')}`);
-    }
-  });
-  return fails;
-}
-
 async function scrollThrough(page) {
   await page.evaluate(async () => {
     const step = Math.max(200, Math.floor(window.innerHeight * 0.6));
@@ -202,7 +187,7 @@ function overflow(page) {
 }
 
 function spill(page) {
-  return page.evaluate(() => [...document.querySelectorAll('.sheet > *, .sub > *, .map')]
+  return page.evaluate(() => [...document.querySelectorAll('.sheet > *, .sub > *')]
     .filter((el) => el.scrollWidth > el.clientWidth + 1)
     .filter((el, _, wide) => !wide.some((inner) => inner !== el && el.contains(inner)))
     .map((el) => `${[el.tagName.toLowerCase(), ...el.classList].join('.')} "${el.textContent.trim().replace(/\s+/g, ' ').slice(0, 30)}" has ${el.scrollWidth}px of content in a ${el.clientWidth}px box`));
@@ -222,23 +207,6 @@ function misplacedNotes(page) {
     const slack = above ? Math.abs(top - above.getBoundingClientRect().bottom - parseFloat(getComputedStyle(above).marginBottom)) : Infinity;
     return slack > 8 ? [`${what} sits ${Math.round(drift)}px from the top of the element before it and ${above ? `${Math.round(slack)}px from the bottom margin of the note above it` : 'has no note above it'}`] : [];
   }));
-}
-
-function smallFigureText(page) {
-  return page.evaluate(() => {
-    const small = [];
-    for (const fig of document.querySelectorAll('.fig')) {
-      const walker = document.createTreeWalker(fig, NodeFilter.SHOW_TEXT);
-      while (walker.nextNode()) {
-        const text = walker.currentNode.textContent.trim();
-        const el = walker.currentNode.parentElement;
-        if (!text || !el.getClientRects().length) continue;
-        const size = parseFloat(getComputedStyle(el).fontSize);
-        if (size < 14) small.push(`"${text.slice(0, 30)}" at ${size}px`);
-      }
-    }
-    return small;
-  });
 }
 
 function readTerms(page) {
@@ -271,73 +239,6 @@ function readTerms(page) {
       })),
     };
   });
-}
-
-function figureState(fig) {
-  return fig.evaluate((f) => [...f.querySelectorAll('*')]
-    .filter((el) => !el.closest('label') && [...el.classList].some((c) => /^r\d+$/.test(c)))
-    .map((el) => {
-      const cs = getComputedStyle(el);
-      const text = el.textContent.trim();
-      return {
-        rows: [...el.classList].filter((c) => /^r\d+$/.test(c)).map((c) => Number(c.slice(1))),
-        name: `${el.tagName.toLowerCase()}.${[...el.classList].join('.')}${text ? ` "${text}"` : ''}`,
-        shown: el.getClientRects().length > 0,
-        look: [cs.color, cs.stroke, cs.strokeWidth, cs.fontWeight, cs.textDecorationLine, cs.opacity,
-          cs.outlineStyle, cs.outlineColor, cs.backgroundColor, cs.borderTopColor].join(' '),
-      };
-    }));
-}
-
-function settle(page) {
-  return page.evaluate(async () => {
-    const started = document.getAnimations().length;
-    await Promise.all(document.getAnimations().map((a) => a.finished.catch(() => {})));
-    await new Promise(requestAnimationFrame);
-    return started;
-  });
-}
-
-async function exerciseFigures(page, where) {
-  const fails = [];
-  let animations = 0;
-  const figures = await page.$$('figure.fig');
-  if (!figures.length) return { fails: ['figures: no figure.fig on the page'], animations };
-  for (const fig of figures) {
-    const id = await fig.evaluate((f) => f.id || 'unnamed');
-    const radios = await fig.$$eval('input[type="radio"]', (rs) => rs.map((r) => ({
-      value: r.value,
-      row: Number([...(r.closest('label')?.classList ?? [])].find((c) => /^r\d+$/.test(c))?.slice(1)),
-    })));
-    if (radios.length < 2 || radios.some((r) => !r.row)) { fails.push(`figure ${id}: needs two or more radios, each inside a label with a row class`); continue; }
-    const rows = await fig.evaluate((f) => parseFloat(getComputedStyle(f.querySelector('.map') ?? f).getPropertyValue('--rows')));
-    if (FIGURE_WIRES[where] && rows !== radios.length) fails.push(`figure ${id}: --rows is ${rows}, want ${radios.length}, one per radio`);
-    const wires = await fig.$$eval('svg.wire', (ws) => ws.filter((w) => w.getClientRects().length).length);
-    if (FIGURE_WIRES[where] && !wires) fails.push(`figure ${id} at ${where}px: no wires render`);
-    if (!FIGURE_WIRES[where] && wires) fails.push(`figure ${id} at ${where}px: ${wires} wire set(s) render, want the stacked layout`);
-    const labels = await fig.$$('label');
-    const states = [];
-    for (const [k, label] of labels.entries()) {
-      await label.click();
-      animations += await settle(page);
-      states.push(await figureState(fig));
-      await fig.screenshot({ path: path.join(OUT, `fig-${id}-${radios[k].value}-${where}.png`) });
-    }
-    fails.push(...checkHighlights(id, `${where}px`, radios, states));
-    await labels[0].click();
-    await fig.$eval('input[type="radio"]:checked', (r) => r.focus());
-    await settle(page);
-    for (let k = 1; k < radios.length; k++) {
-      await page.keyboard.press('ArrowDown');
-      await settle(page);
-      const picked = await fig.$$eval('input[type="radio"]', (rs) => rs.findIndex((r) => r.checked));
-      const state = await figureState(fig);
-      if (picked !== k || JSON.stringify(state) !== JSON.stringify(states[k])) {
-        fails.push(`figure ${id} at ${where}px: ArrowDown does not pick "${radios[k].value}" the way a click does`);
-      }
-    }
-  }
-  return { fails, animations };
 }
 
 async function probeFonts(page) {
@@ -438,7 +339,6 @@ const origin = `http://127.0.0.1:${server.address().port}`;
 const base = `${origin}/`;
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: true, args: ['--no-sandbox', '--hide-scrollbars'] });
 const report = { site: SITE, chrome: await browser.version(), viewports: {}, fail: [], warn: [], skip: [] };
-let figureAnimations = 0;
 
 async function open(vp, { scheme = 'light', motion = 'no-preference', js = true } = {}) {
   const page = await browser.newPage();
@@ -481,7 +381,6 @@ for (const vp of VIEWPORTS) {
 
   const terms = await readTerms(page);
   report.fail.push(...checkTermBars(terms, `${vp.width}px`));
-  for (const s of await smallFigureText(page)) report.fail.push(`${vp.name}: figure text under 14px: ${s}`);
   for (const s of await spill(page)) report.fail.push(`${vp.name}: ${s}`);
 
   if (vp.name === 'desktop') {
@@ -542,11 +441,6 @@ for (const vp of VIEWPORTS) {
     }
   }
 
-  if (vp.width in FIGURE_WIRES) {
-    const { fails, animations } = await exerciseFigures(page, vp.width);
-    report.fail.push(...fails);
-    figureAnimations += animations;
-  }
   if (vp.name === 'desktop' || vp.name === 'mobile') report.fail.push(...await checkCopyButton(page, origin, !!vp.hasTouch));
   await page.close();
 }
@@ -577,17 +471,6 @@ const rmHidden = await hiddenText(rm);
 await rm.screenshot({ path: path.join(OUT, 'reduced-motion-full.png'), fullPage: true });
 report.reducedMotionHidden = rmHidden.slice(0, 8);
 if (rmHidden.length) report.fail.push(`reduced motion: ${rmHidden.length} text node(s) invisible without scrolling: "${rmHidden[0]}"`);
-let rmAnimations = 0;
-for (const label of await rm.$$('figure.fig label')) {
-  await label.click();
-  rmAnimations = Math.max(rmAnimations, await rm.evaluate(async () => {
-    const now = document.getAnimations().length;
-    await new Promise(requestAnimationFrame);
-    return Math.max(now, document.getAnimations().length);
-  }));
-}
-if (rmAnimations) report.fail.push(`reduced motion: picking a figure radio runs ${rmAnimations} animation(s) or transition(s)`);
-if (!figureAnimations) report.warn.push('figures: nothing animates under no-preference, so the reduced-motion check proves nothing');
 await rm.close();
 
 const { page: nojs } = await open(VIEWPORTS[0], { js: false });
