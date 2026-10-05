@@ -147,7 +147,7 @@ h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.00
   .hd.mid { display: block; grid-column: 3; text-align: center; }
   .hd.new { grid-column: 5; }
   .in { grid-column: 3; margin: 0; align-self: center; --line: 1px; --line-color: var(--rule); }
-  .in::before, .in::after { content: ""; flex: 1 0 .75rem; border-top: var(--line) solid var(--line-color); }
+  .in::before, .in::after { content: ""; flex: 1 0 .75rem; min-width: .75rem; border-top: var(--line) solid var(--line-color); }
   .in::before { flex-grow: 0; }
   .in.guessed::before { border-top: var(--line) dashed var(--red); }
   .map:has(.r1 :checked) .in.r1, .map:has(.r2 :checked) .in.r2, .map:has(.r3 :checked) .in.r3 { --line: 2px; --line-color: var(--ink); }
