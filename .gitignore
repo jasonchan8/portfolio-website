@@ -12,6 +12,9 @@ dist/
 build/
 *.log
 
+# Screenshots and report from npm run verify
+.verify/
+
 # IDE
 .vscode/
 .idea/
