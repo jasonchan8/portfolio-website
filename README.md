@@ -28,39 +28,34 @@ Every entry has this shape. Copy an existing `<article>` and edit it:
 - Copy the entry's bullets from `resume.tex` word for word, in the resume's order. Convert only the LaTeX. Write `\%` as `%`, `--` as "to", and a straight apostrophe as ’. Drop `\textbar{}`.
 - Put the meta note directly after `.head`. On screens 62rem and wider, a CSS subgrid places notes in the margin. The meta note spans the rows of the head and the first bullets list. Put any other note, such as the reference-letter quote in the Teledyne FLIR entry, directly after the element it supports. The note sits in the margin on that element's row. After the first bullets list, the meta note already fills that row, so the note stacks directly under the meta note. Two notes in a row leave a gap in the reading column.
 - At 1440px, `npm run verify` fails when a note is the first child of its parent or follows another note. It also fails when a note sits more than 8px from both the top of the element before it and the bottom margin of the note above it.
-- Take every fact from the resume. `npm run verify` fails when the page shows a number that `resume.tex` does not contain.
+- Take every fact from the resume. `npm run verify` fails when the page shows a number that `resume.tex` does not contain. The full-time total is the one exception, because it adds up numbers that `resume.tex` does contain.
 - `npm run verify` also takes each employer, title, and date from the `\entry` lines in `resume.tex`, and each project and date from the `\project` lines. A new resume entry fails verify until the page has it.
-- For a full-time term, also add a row to the terms chart.
+- For a full-time term, also add a row to the full-time total.
 
-## Draw a term on the chart
+## Update the full-time total
 
-The chart in the masthead draws each full-time term to scale. Each row is one `<li>` with two numbers:
+The masthead leads with the number of months of full-time work, then lists each employer's months, most recent first. Each row has this shape:
 
 ```html
-<li class="end" style="--from: 16; --len: 3"><span class="who">Visa, 3 months</span><span class="bar"></span></li>
+<li><span>Visa</span> <span>3<span class="vh"> months</span></span></li>
 ```
 
-- `--from` counts the months from January 2025 to the month the term starts: `(year - 2025) * 12 + (month - 1)`. May 2026 is 12 + 4 = 16.
-- `--len` is the length of the term in months. The label reads "Org, N months", and N equals `--len`.
-- `.terms` sets `--months: 29`, the span from January 2025 through May 2027. The B.S. row sits at `--from: 28`. A term outside that span needs a new start or end for the chart. Then update `--months`, every `--from`, and the `--at` positions of the axis labels.
-- A term that runs to the present gets `class="open"`. Its bar fades out instead of ending on a date.
+The hidden " months" makes a screen reader say "Visa 3 months". The row of the current term also ends in `<small>now</small>`.
 
-`npm run verify` checks this arithmetic. It fails when:
+The numbers come from `resume.tex`. The date field of each internship's `\entry` ends in "N mo full-time", and the total is the sum of those N. Because the sum appears nowhere in `resume.tex`, `npm run verify` adds it to the numbers that the page may show. It also reads the same date fields and fails when:
 
-- A label disagrees with `--len`.
-- `--from` disagrees with the entry's start date, or a closed term's `--len` disagrees with its start and end dates.
-- `.open` disagrees with "to present".
-- A row falls outside `--months`, or the B.S. row does not end at `--months`.
-- An axis label's `--at` is not `(year - start) * 12`, where `start` is the year of the label at `--at: 0`.
-- A bar's width is off by more than 1px.
+- The total is not the sum.
+- The list's employers, months, or order differ from `resume.tex`.
+- "now" marks an employer whose dates do not end in "Present", or misses the one whose dates do.
+- An entry's `.meta .term` gives a different number of months from its resume entry.
 
-## When the DraftKings term ends
+### When the DraftKings term ends
 
 Three places say that the term is current. Change them in one commit:
 
 1. The masthead. The standfirst, `<meta name="description">`, and `og:description` say "intern at DraftKings".
 2. The DraftKings entry. Its `.when` reads "Aug 2026 to present", and its `.term` gives the length. Its second bullet is in the present tense. Change the bullets in `resume.tex` first, then copy them again.
-3. The chart row. Remove `class="open"`, and set `--len` and the label to the final number of months.
+3. The full-time total. Remove `<small>now</small>` from the DraftKings row. If the term's final length is not 5 months, change the row and the total too.
 
 Then run `npm run verify`. `og.png` names no employer, so it stays as it is.
 

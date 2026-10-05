@@ -35,7 +35,6 @@ const MIME = {
   '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.otf': 'font/otf', '.pdf': 'application/pdf',
   '.txt': 'text/plain', '.xml': 'application/xml', '.webmanifest': 'application/manifest+json',
 };
-const MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, sept: 8, oct: 9, nov: 10, dec: 11 };
 
 function serve(dir) {
   const server = http.createServer((req, res) => {
@@ -68,8 +67,11 @@ function readResume(file) {
   const arg = String.raw`\s*\{((?:[^{}]|\{[^{}]*\})*)\}`;
   const plain = (s) => s.split('\\textbar')[0].replace(/\\([ &%$#_])/g, '$1').replace(/\\[a-z]+|[{}]/gi, '').replace(/[\s~]+/g, ' ').trim();
   const required = [body.match(/mailto:([^}]+)/)?.[1]];
+  const terms = [];
   for (const [, org, , title, dates] of body.matchAll(new RegExp(String.raw`\\entry${arg.repeat(4)}`, 'g'))) {
     required.push(plain(org), plain(title), ...(dates.match(/[A-Z][a-z]{2,3} \d{4}/g) ?? []));
+    const months = /(\d+) mo full-time/.exec(dates)?.[1];
+    if (months) terms.push({ org: plain(org), months: Number(months), now: /Present$/.test(plain(dates)) });
   }
   for (const [, name, , date] of body.matchAll(new RegExp(String.raw`\\project${arg.repeat(3)}`, 'g'))) {
     required.push(...plain(name).split(/ \(([^()]+)\)$/), plain(date));
@@ -77,58 +79,34 @@ function readResume(file) {
   const facts = body.split('\n').filter((line) => !line.replace(/\D/g, '').includes(PHONE)).join('\n')
     .replace(/\\href\{[^}]*\}/g, '')
     .replace(/\d+(\.\d+)?(pt|in|em|ex|cm|mm)\b/g, '');
-  return { numbers: new Set(numberTokens(facts).map((t) => t.value)), required: required.filter(Boolean) };
+  const total = terms.reduce((sum, t) => sum + t.months, 0);
+  const numbers = new Set([...numberTokens(facts).map((t) => t.value), String(total)]);
+  return { numbers, required: required.filter(Boolean), terms, total };
 }
 
-function monthIndices(text, originYear) {
-  return [...text.matchAll(/\b([A-Z][a-z]{2,3}) (\d{4})\b/g)]
-    .filter((m) => m[1].toLowerCase() in MONTHS)
-    .map((m) => (Number(m[2]) - originYear) * 12 + MONTHS[m[1].toLowerCase()]);
+function readFullTime(page) {
+  return page.evaluate(() => ({
+    total: parseInt(document.querySelector('.stat p')?.textContent, 10),
+    rows: [...document.querySelectorAll('.stat li')].map((li) => {
+      const [, org, months, rest] = /^(.*?) (\d+)(.*)$/.exec(li.textContent.replace(/\s+/g, ' ').trim()) ?? [];
+      return { org, months: Number(months), now: /\bnow\b/.test(rest) };
+    }),
+    meta: Object.fromEntries([...document.querySelectorAll('article.entry')].map((a) => [a.querySelector('h3')?.textContent.trim(), a.querySelector('.meta .term')?.textContent.trim()])),
+  }));
 }
 
-function checkTermLabels(t) {
-  if (!t) return ['terms chart: no .terms .gantt on the page'];
+function checkFullTime(shown, resume) {
   const fails = [];
-  const origin = t.ticks.find((tick) => tick.at === 0)?.year;
-  if (!Number.isInteger(origin)) return ['terms chart: no axis label at --at: 0 names the start year'];
-  for (const { year, at } of t.ticks) {
-    if (at !== (year - origin) * 12) fails.push(`terms chart: the ${year} axis label has --at ${at}, want ${(year - origin) * 12}`);
-  }
-  for (const row of t.rows) {
-    const org = row.label.split(',')[0];
-    if (!(row.from >= 0 && row.from + row.len <= t.months)) fails.push(`terms chart: "${row.label}" falls outside the chart's ${t.months} months (--from ${row.from}, --len ${row.len})`);
-    if (row.grad) {
-      const [at] = monthIndices(row.label, origin);
-      if (at !== row.from) fails.push(`terms chart: "${row.label}" has --from ${row.from}, want ${at}`);
-      if (row.from + row.len !== t.months) fails.push(`terms chart: "${row.label}" ends at month ${row.from + row.len}, but --months is ${t.months}`);
-      continue;
-    }
-    const n = /, (\d+) months?$/.exec(row.label)?.[1];
-    if (Number(n) !== row.len) fails.push(`terms chart: "${row.label}" has --len ${row.len}`);
-    const entry = t.entries.find((e) => e.org === org);
-    if (!entry) { fails.push(`terms chart: no entry is headed "${org}"`); continue; }
-    const [start, end] = monthIndices(entry.when, origin);
-    if (start !== row.from) fails.push(`terms chart: ${org} has --from ${row.from}, but its entry starts in month ${start} (${entry.when})`);
-    if (!row.open && end - start + 1 !== row.len) fails.push(`terms chart: ${org} has --len ${row.len}, but ${entry.when} spans ${end - start + 1} months`);
-    if (Number(/(\d+) months?/.exec(entry.term)?.[1]) !== row.len) fails.push(`terms chart: ${org} has --len ${row.len}, but its entry says "${entry.term}"`);
-    if (/to present$/i.test(entry.when) !== row.open) fails.push(`terms chart: ${org} ${row.open ? 'is .open, but its entry has an end date' : 'runs to present, but its row is not .open'}`);
-  }
-  for (const e of t.entries.filter((x) => /full-time/.test(x.term))) {
-    if (!t.rows.some((r) => !r.grad && r.label.split(',')[0] === e.org)) fails.push(`terms chart: no row for the full-time term at ${e.org}`);
+  const list = (rows) => rows.map((r) => `${r.org} ${r.months}`).join(', ');
+  const current = (rows) => rows.filter((r) => r.now).map((r) => r.org).join(', ') || 'no employer';
+  if (shown.total !== resume.total) fails.push(`full-time total: the number reads ${shown.total}, but the full-time months in resume.tex sum to ${resume.total}`);
+  if (list(shown.rows) !== list(resume.terms)) fails.push(`full-time total: the list reads "${list(shown.rows)}", but resume.tex has "${list(resume.terms)}"`);
+  if (current(shown.rows) !== current(resume.terms)) fails.push(`full-time total: "now" marks ${current(shown.rows)}, but resume.tex has ${current(resume.terms)} running to Present`);
+  for (const t of resume.terms) {
+    const term = shown.meta[t.org] ?? '';
+    if (Number(/(\d+) months?/.exec(term)?.[1]) !== t.months) fails.push(`${t.org} entry: .meta .term reads "${term}", but resume.tex says ${t.months} mo full-time`);
   }
   return fails;
-}
-
-function checkTermBars(t, where) {
-  if (!t) return [];
-  const unit = t.width / t.months;
-  return t.rows.flatMap((row) => {
-    const org = row.label.split(',')[0];
-    const fails = [];
-    if (!(Math.abs(row.barWidth - row.len * unit) <= 1)) fails.push(`terms chart at ${where}: the ${org} bar is ${row.barWidth.toFixed(1)}px, want ${(row.len * unit).toFixed(1)}px for ${row.len} of ${t.months} months`);
-    if (!(Math.abs(row.barLeft - row.from * unit) <= 1)) fails.push(`terms chart at ${where}: the ${org} bar starts at ${row.barLeft.toFixed(1)}px, want ${(row.from * unit).toFixed(1)}px`);
-    return fails;
-  });
 }
 
 async function scrollThrough(page) {
@@ -194,7 +172,7 @@ function spill(page) {
 }
 
 function misplacedNotes(page) {
-  return page.evaluate(() => [...document.querySelectorAll('.note:not(.terms)')].flatMap((note) => {
+  return page.evaluate(() => [...document.querySelectorAll('.note:not(.stat)')].flatMap((note) => {
     const prev = note.previousElementSibling;
     const what = `"${note.textContent.trim().replace(/\s+/g, ' ').slice(0, 40)}"`;
     if (!prev) return [`${what} is the first child of its parent`];
@@ -207,38 +185,6 @@ function misplacedNotes(page) {
     const slack = above ? Math.abs(top - above.getBoundingClientRect().bottom - parseFloat(getComputedStyle(above).marginBottom)) : Infinity;
     return slack > 8 ? [`${what} sits ${Math.round(drift)}px from the top of the element before it and ${above ? `${Math.round(slack)}px from the bottom margin of the note above it` : 'has no note above it'}`] : [];
   }));
-}
-
-function readTerms(page) {
-  return page.evaluate(() => {
-    const chart = document.querySelector('.terms');
-    const list = chart?.querySelector('.gantt');
-    if (!list) return null;
-    const num = (el, prop) => parseFloat(getComputedStyle(el).getPropertyValue(prop));
-    const box = list.getBoundingClientRect();
-    return {
-      months: num(chart, '--months'),
-      width: box.width,
-      ticks: [...chart.querySelectorAll('.axis span')].map((s) => ({ year: Number(s.textContent), at: num(s, '--at') })),
-      rows: [...list.children].map((li) => {
-        const bar = li.querySelector('.bar')?.getBoundingClientRect();
-        return {
-          label: li.querySelector('.who')?.textContent.trim() ?? '',
-          from: num(li, '--from'),
-          len: num(li, '--len'),
-          open: li.classList.contains('open'),
-          grad: li.classList.contains('grad'),
-          barLeft: bar ? bar.left - box.left : NaN,
-          barWidth: bar ? bar.width : NaN,
-        };
-      }),
-      entries: [...document.querySelectorAll('article.entry')].map((a) => ({
-        org: a.querySelector('h3')?.textContent.trim(),
-        when: a.querySelector('.meta .when')?.textContent.trim() ?? '',
-        term: a.querySelector('.meta .term')?.textContent.trim() ?? '',
-      })),
-    };
-  });
 }
 
 async function probeFonts(page) {
@@ -379,12 +325,9 @@ for (const vp of VIEWPORTS) {
   if (ov.scrollWidth > ov.viewport + 1) report.fail.push(`${vp.name}: horizontal overflow ${ov.scrollWidth}px > ${ov.viewport}px (${ov.offenders[0] || '?'})`);
   if (hidden.length) report.fail.push(`${vp.name}: ${hidden.length} text node(s) still invisible after scrolling: "${hidden[0]}"`);
 
-  const terms = await readTerms(page);
-  report.fail.push(...checkTermBars(terms, `${vp.width}px`));
   for (const s of await spill(page)) report.fail.push(`${vp.name}: ${s}`);
 
   if (vp.name === 'desktop') {
-    report.fail.push(...checkTermLabels(terms));
     for (const s of await misplacedNotes(page)) report.fail.push(`note placement: ${s}`);
     await page.addScriptTag({ content: AXE });
     const axe = await page.evaluate(async () => {
@@ -426,8 +369,9 @@ for (const vp of VIEWPORTS) {
       const unbacked = [...new Set(tokens.filter((t) => !t.padded && !resume.numbers.has(t.value)).map((t) => t.raw))];
       if (unbacked.length) report.fail.push(`numbers on the page that are not in resume.tex: ${unbacked.join(', ')}`);
       for (const s of resume.required) if (!flat.includes(s.toLowerCase())) report.fail.push(`missing text from resume.tex: "${s}"`);
+      report.fail.push(...checkFullTime(await readFullTime(page), resume));
     } else {
-      report.skip.push(`numbers and required text against the resume: no file at ${RESUME_TEX} (set RESUME_TEX)`);
+      report.skip.push(`numbers, required text, and the full-time total against the resume: no file at ${RESUME_TEX} (set RESUME_TEX)`);
     }
     const html = await page.content();
     for (const s of FORBIDDEN) if (html.includes(s)) report.fail.push(`forbidden content present: "${s}"`);
