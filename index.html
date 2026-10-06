@@ -138,8 +138,8 @@ footer { padding-bottom: 4rem; }
     .sheet > .sub, .sub > .sub, .sheet > h2, .sub > h2 { grid-column: 1 / -1; }
     .sheet > .note, .sub > .note { grid-column: 2; margin: 0 0 1rem; }
     .meta { grid-row: span 2; padding-left: .75rem; border-left: 1px solid var(--red); }
-    /* A note cannot share the meta's second row, so the element in that row spans the third too and the note stacks under the meta. */
-    .meta + :has(+ .note) { grid-row: span 2; }
+    /* A note cannot share the meta's second row, so the element in that row spans three rows: its own, the note's, and a fourth below the note. Grid sizing handles two-row items before three-row ones, so the meta sets the second row's height. The element's extra height then goes into the fourth row instead of pushing the note down. */
+    .meta + :has(+ .note) { grid-row: span 3; }
     .meta span { display: block; }
     .meta span + span::before { content: none; }
   }
@@ -208,9 +208,11 @@ footer { padding-bottom: 4rem; }
 
     <article class="sub entry" id="teledyne-flir">
       <div class="head"><h3>Teledyne FLIR</h3><p class="role">Software Engineering Intern, Unmanned Ground Systems</p></div>
-      <p class="note meta"><span class="when">Jan 2025 to Jun 2025</span> <span class="term">6 months, full-time</span> <span>Billerica, MA</span> <span>Android, JUnit, REST, Linux</span></p>
+      <p class="note meta"><span class="when">Jan 2025 to Jun 2025</span> <span class="term">6 months, full-time</span> <span>Billerica, MA</span> <span>Java, Android, REST, JUnit, Linux</span></p>
       <ul class="bullets">
+        <li>Shipped 8 Java features into FLIR’s 100K-line Android operator console for unmanned ground vehicles, the software field operators use to run the vehicles in live operations.</li>
         <li>Fixed 40+ concurrency and memory-leak defects across real-time telemetry and video streaming pipelines on Linux, cutting reported system failures by 70%.</li>
+        <li>Built REST endpoints for vehicle-to-operator state sync, and wrote the JUnit suites that took the console’s test coverage from 35% to 80%.</li>
       </ul>
       <figure class="note quote">
         <blockquote><p>“Jason’s performance was excellent and I highly recommend him.”</p></blockquote>
