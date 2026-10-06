@@ -66,22 +66,33 @@ function readResume(file) {
   const body = tex.slice(tex.indexOf('\\begin{document}')).replace(/(?<!\\)%.*/g, '');
   const arg = String.raw`\s*\{((?:[^{}]|\{[^{}]*\})*)\}`;
   const plain = (s) => s.split('\\textbar')[0].replace(/\\([ &%$#_])/g, '$1').replace(/\\[a-z]+|[{}]/gi, '').replace(/[\s~]+/g, ' ').trim();
+  const prose = (s) => s.replace(/\\textbar\{\}/g, '').replace(/\\%/g, '%').replace(/--/g, 'to').replace(/'/g, '’').replace(/\s+/g, ' ').trim();
+  const bulletsUnder = (head) => {
+    const block = body.slice(head.index + head[0].length).split(/\\(?:entry|project|section)\b/)[0];
+    return [...block.matchAll(new RegExp(String.raw`\\resumeItem${arg}`, 'g'))].map(([, item]) => prose(item));
+  };
   const required = [body.match(/mailto:([^}]+)/)?.[1]];
   const terms = [];
-  for (const [, org, , title, dates] of body.matchAll(new RegExp(String.raw`\\entry${arg.repeat(4)}`, 'g'))) {
+  const entries = [];
+  for (const head of body.matchAll(new RegExp(String.raw`\\entry${arg.repeat(4)}`, 'g'))) {
+    const [, org, , title, dates] = head;
     required.push(plain(org), plain(title), ...(dates.match(/[A-Z][a-z]{2,3} \d{4}/g) ?? []));
     const months = /(\d+) mo full-time/.exec(dates)?.[1];
     if (months) terms.push({ org: plain(org), months: Number(months), now: /Present$/.test(plain(dates)) });
+    entries.push({ name: plain(org), bullets: bulletsUnder(head) });
   }
-  for (const [, name, , date] of body.matchAll(new RegExp(String.raw`\\project${arg.repeat(3)}`, 'g'))) {
-    required.push(...plain(name).split(/ \(([^()]+)\)$/), plain(date));
+  for (const head of body.matchAll(new RegExp(String.raw`\\project${arg.repeat(3)}`, 'g'))) {
+    const [, name, , date] = head;
+    const names = plain(name).split(/ \(([^()]+)\)$/);
+    required.push(...names, plain(date));
+    entries.push({ name: names[0], bullets: bulletsUnder(head) });
   }
   const facts = body.split('\n').filter((line) => !line.replace(/\D/g, '').includes(PHONE)).join('\n')
     .replace(/\\href\{[^}]*\}/g, '')
     .replace(/\d+(\.\d+)?(pt|in|em|ex|cm|mm)\b/g, '');
   const total = terms.reduce((sum, t) => sum + t.months, 0);
   const numbers = new Set([...numberTokens(facts).map((t) => t.value), String(total)]);
-  return { numbers, required: required.filter(Boolean), terms, total };
+  return { numbers, required: required.filter(Boolean), terms, total, entries };
 }
 
 function readFullTime(page) {
@@ -106,6 +117,40 @@ function checkFullTime(shown, resume) {
     const term = shown.meta[t.org] ?? '';
     if (Number(/(\d+) months?/.exec(term)?.[1]) !== t.months) fails.push(`${t.org} entry: .meta .term reads "${term}", but resume.tex says ${t.months} mo full-time`);
   }
+  return fails;
+}
+
+function readBullets(page) {
+  return page.evaluate(() => {
+    const text = (el) => el?.textContent.replace(/\s+/g, ' ').trim();
+    return {
+      articles: [...document.querySelectorAll('article')].map((a) => ({
+        h3: text(a.querySelector('h3')),
+        role: text(a.querySelector('.role')),
+        bullets: [...a.querySelectorAll('.bullets li')].map(text),
+      })),
+      stray: [...document.querySelectorAll('.bullets li:not(article li)')].map(text),
+    };
+  });
+}
+
+function checkBullets(shown, resume) {
+  const fails = [];
+  const say = (bullet) => (bullet === undefined ? 'none' : `"${bullet}"`);
+  const matched = new Set();
+  for (const { name, bullets } of resume.entries) {
+    // A project named after its event, such as the X (Twitter) Developer Challenge, shows that name as its .role under a descriptive h3.
+    const article = shown.articles.find((a) => a.h3 === name) ?? shown.articles.find((a) => a.role === name);
+    matched.add(article);
+    const onPage = article?.bullets ?? [];
+    for (let k = 0; k < Math.max(bullets.length, onPage.length); k++) {
+      if (onPage[k] !== bullets[k]) fails.push(`${name} bullet ${k + 1}: the page has ${say(onPage[k])}, but resume.tex has ${say(bullets[k])}`);
+    }
+  }
+  for (const a of shown.articles) {
+    if (!matched.has(a) && a.bullets.length) fails.push(`${a.h3} article: it has bullets, but its h3 and .role name no \\entry or \\project in resume.tex`);
+  }
+  for (const bullet of shown.stray) fails.push(`bullet outside any article: resume.tex cannot back "${bullet}"`);
   return fails;
 }
 
@@ -370,8 +415,9 @@ for (const vp of VIEWPORTS) {
       if (unbacked.length) report.fail.push(`numbers on the page that are not in resume.tex: ${unbacked.join(', ')}`);
       for (const s of resume.required) if (!flat.includes(s.toLowerCase())) report.fail.push(`missing text from resume.tex: "${s}"`);
       report.fail.push(...checkFullTime(await readFullTime(page), resume));
+      report.fail.push(...checkBullets(await readBullets(page), resume));
     } else {
-      report.skip.push(`numbers, required text, and the full-time total against the resume: no file at ${RESUME_TEX} (set RESUME_TEX)`);
+      report.skip.push(`numbers, required text, the full-time total, and bullets against the resume: no file at ${RESUME_TEX} (set RESUME_TEX)`);
     }
     const html = await page.content();
     for (const s of FORBIDDEN) if (html.includes(s)) report.fail.push(`forbidden content present: "${s}"`);

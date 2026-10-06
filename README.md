@@ -25,7 +25,7 @@ Every entry has this shape. Copy an existing `<article>` and edit it:
 </article>
 ```
 
-- Copy the entry's bullets from `resume.tex` word for word, in the resume's order. Convert only the LaTeX. Write `\%` as `%`, `--` as "to", and a straight apostrophe as ’. Drop `\textbar{}`.
+- Copy the entry's bullets from `resume.tex` word for word, in the resume's order. Convert only the LaTeX. Write `\%` as `%`, `--` as "to", and a straight apostrophe as ’. Drop `\textbar{}`. `npm run verify` checks each bullet against `resume.tex`, so a resume edit fails verify until the page matches.
 - Put the meta note directly after `.head`. On screens 62rem and wider, a CSS subgrid places notes in the margin. The meta note spans the rows of the head and the first bullets list. Put any other note, such as the reference-letter quote in the Teledyne FLIR entry, directly after the element it supports. The note sits in the margin on that element's row. After the first bullets list, the meta note already fills that row, so the note stacks directly under the meta note. Two notes in a row leave a gap in the reading column.
 - At 1440px, `npm run verify` fails when a note is the first child of its parent or follows another note. It also fails when a note sits more than 8px from both the top of the element before it and the bottom margin of the note above it.
 - Take every fact from the resume. `npm run verify` fails when the page shows a number that `resume.tex` does not contain. The full-time total is the one exception, because it adds up numbers that `resume.tex` does contain.
