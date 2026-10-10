@@ -28,7 +28,7 @@ TEXT = (
     + [0x2009, 0x200A, 0x2013, 0x2014, 0x2018, 0x2019, 0x201C, 0x201D, 0x2020, 0x2021,
        0x2022, 0x2026, 0x202F, 0x2032, 0x2033, 0x20AC, 0x2122, 0x2192, 0x2264, 0x2265]
 )
-LETTERS = list(range(0x41, 0x5B)) + list(range(0x61, 0x7B)) + [0x20, 0x2C, 0x2E, 0x2019]
+DISPLAY = list(range(0x30, 0x3A)) + list(range(0x41, 0x5B)) + list(range(0x61, 0x7B)) + [0x20, 0x2C, 0x2E, 0x2019]
 FEATURES = ["kern", "liga", "ccmp", "locl", "smcp", "c2sc", "onum", "lnum", "tnum", "pnum", "case", "zero"]
 FAMILY = "JC Serif"
 NOTICES = {0: "copyright", 7: "trademark", 13: "license", 14: "license URL"}
@@ -36,7 +36,7 @@ NOTICES = {0: "copyright", 7: "trademark", 13: "license", 14: "license URL"}
 FACES = {
     "serif-text.woff2": ("SourceSerif4Variable-Roman.ttf.woff2", {"wght": (340, 650), "opsz": 20}, TEXT, "Text"),
     "serif-italic.woff2": ("SourceSerif4Variable-Italic.ttf.woff2", {"wght": 400, "opsz": 20}, TEXT, "Italic"),
-    "serif-display.woff2": ("SourceSerif4Variable-Roman.ttf.woff2", {"wght": 400, "opsz": 60}, LETTERS, "Display"),
+    "serif-display.woff2": ("SourceSerif4Variable-Roman.ttf.woff2", {"wght": 400, "opsz": 60}, DISPLAY, "Display"),
 }
 
 PAGE_BOLD_WEIGHT = 620
