@@ -88,6 +88,7 @@ p { margin: 0 0 .9rem; text-wrap: pretty; }
 h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.5rem, 1.75rem + 2.4vw, 3.4rem); line-height: 1.05; letter-spacing: -.012em; margin: 0 0 .8rem; }
 .standfirst { font-size: 1.1875rem; line-height: 1.45; margin: 0 0 1.1rem; max-width: 34rem; text-wrap: balance; }
 .links { list-style: none; margin: 0 0 1.75rem; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; }
+.links .email { flex-basis: 100%; }
 
 .note { font-size: .9375rem; line-height: 1.45; color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; margin: -.2rem 0 1.15rem; padding-left: .75rem; border-left: 1px solid var(--red); }
 .meta { margin: 0 0 .9rem; padding: 0; border: 0; }
@@ -174,9 +175,9 @@ footer { padding-bottom: 4rem; }
     <p class="standfirst">Software engineering intern at DraftKings, previously at Visa and Teledyne FLIR. I study computer science at Northeastern and expect my B.S. in May 2027.</p>
     <ul class="links">
       <li><a href="resume/Jason_Chan_Resume.pdf">Résumé <span class="fmt">PDF</span></a></li>
-      <li><a href="mailto:chan.jaso@northeastern.edu">chan.jaso@northeastern.edu</a></li>
       <li><a href="https://linkedin.com/in/jasonchan8">LinkedIn</a></li>
       <li><a href="reference/JasonChan-Reference.pdf">Reference letter <span class="fmt">PDF</span></a></li>
+      <li class="email"><a id="email" href="mailto:chan.jaso@northeastern.edu">chan.jaso@northeastern.edu</a> <button type="button" class="copy" hidden><span>Copy</span><span aria-hidden="true">Copied</span><span aria-hidden="true">Selected</span></button><span class="vh" id="copy-status" role="status"></span></li>
     </ul>
   </div>
   <div class="note stat">
@@ -271,7 +272,7 @@ footer { padding-bottom: 4rem; }
 
 <footer class="sheet">
   <h2 id="contact">Contact</h2>
-  <p>Email <a id="email" href="mailto:chan.jaso@northeastern.edu">chan.jaso@northeastern.edu</a> <button type="button" class="copy" hidden><span>Copy</span><span aria-hidden="true">Copied</span><span aria-hidden="true">Selected</span></button><span class="vh" id="copy-status" role="status"></span> or message me on <a href="https://linkedin.com/in/jasonchan8">LinkedIn</a>. My <a href="resume/Jason_Chan_Resume.pdf">résumé</a> and a <a href="reference/JasonChan-Reference.pdf">reference letter from Teledyne FLIR</a> are PDFs.</p>
+  <p>Email <a href="mailto:chan.jaso@northeastern.edu">chan.jaso@northeastern.edu</a> or message me on <a href="https://linkedin.com/in/jasonchan8">LinkedIn</a>. My <a href="resume/Jason_Chan_Resume.pdf">résumé</a> and a <a href="reference/JasonChan-Reference.pdf">reference letter from Teledyne FLIR</a> are PDFs.</p>
   <p class="note colophon">Set in JC Serif, a subset of Adobe’s Source Serif 4. Plain HTML and CSS. The only script copies the email address. Every number on this page comes from my résumé.</p>
 </footer>
 <script>
