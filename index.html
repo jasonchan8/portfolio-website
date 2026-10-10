@@ -70,6 +70,7 @@ body {
 
 a { color: inherit; text-decoration: underline 1px var(--underline); text-underline-offset: .2em; transition: text-decoration-color .15s; }
 a:hover { text-decoration-color: currentColor; }
+a[href^="mailto:"] { overflow-wrap: anywhere; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 1px; }
 
 .skip { position: absolute; left: 1rem; top: -5rem; z-index: 1; padding: .5rem .8rem; background: var(--ink); color: var(--paper); text-decoration: none; }
@@ -85,7 +86,6 @@ p { margin: 0 0 .9rem; text-wrap: pretty; }
 h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.5rem, 1.75rem + 2.4vw, 3.4rem); line-height: 1.05; letter-spacing: -.012em; margin: 0 0 .8rem; }
 .standfirst { font-size: 1.1875rem; line-height: 1.45; margin: 0 0 1.1rem; max-width: 34rem; text-wrap: balance; }
 .links { list-style: none; margin: 0 0 1.75rem; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; }
-.links a { overflow-wrap: anywhere; }
 
 .note { font-size: .9375rem; line-height: 1.45; color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; margin: -.2rem 0 1.15rem; padding-left: .75rem; border-left: 1px solid var(--red); }
 .meta { margin: 0 0 .9rem; padding: 0; border: 0; }
@@ -116,7 +116,7 @@ h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.00
 
 .skills { margin: 0; }
 .skills div { margin-bottom: .45rem; }
-.skills dt { display: inline; font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; margin-right: .35em; }
+.skills dt { display: inline; font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; margin-right: .12em; }
 .skills dd { display: inline; margin: 0; }
 
 footer { padding-bottom: 4rem; }
@@ -253,10 +253,10 @@ footer { padding-bottom: 4rem; }
   <section class="sub" aria-labelledby="skills">
     <h2 id="skills">Skills</h2>
     <dl class="skills">
-      <div><dt>Languages</dt><dd>Java, Kotlin, Python, C++, C, TypeScript, JavaScript, SQL</dd></div>
-      <div><dt>Platforms and infrastructure</dt><dd>Android, Linux/Unix, Docker, AWS, Jenkins, Datadog, Bash</dd></div>
-      <div><dt>Frameworks and APIs</dt><dd>React, Node.js, Flask, TensorFlow, Spring Boot, RESTful APIs</dd></div>
-      <div><dt>Data and testing</dt><dd>PostgreSQL, MongoDB, JUnit</dd></div>
+      <div><dt>Languages</dt> <dd>Java, Kotlin, Python, C++, C, TypeScript, JavaScript, SQL</dd></div>
+      <div><dt>Platforms and infrastructure</dt> <dd>Android, Linux/Unix, Docker, AWS, Jenkins, Datadog, Bash</dd></div>
+      <div><dt>Frameworks and APIs</dt> <dd>React, Node.js, Flask, TensorFlow, Spring Boot, RESTful APIs</dd></div>
+      <div><dt>Data and testing</dt> <dd>PostgreSQL, MongoDB, JUnit</dd></div>
     </dl>
   </section>
 </main>
