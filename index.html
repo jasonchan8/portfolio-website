@@ -26,7 +26,9 @@
 @font-face { font-family: "JC Serif"; src: url(fonts/serif-text.woff2) format("woff2"); font-weight: 340 650; font-style: normal; font-display: swap; }
 @font-face { font-family: "JC Serif"; src: url(fonts/serif-italic.woff2) format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 @font-face { font-family: "JC Serif Display"; src: url(fonts/serif-display.woff2) format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "JC Serif Fallback"; src: local("Georgia"); size-adjust: 100.54%; ascent-override: 103.04%; descent-override: 33.32%; line-gap-override: 0.00%; }
+@font-face { font-family: "JC Serif Fallback"; src: local("Georgia"); font-weight: 400; font-style: normal; size-adjust: 100.54%; ascent-override: 103.04%; descent-override: 33.32%; line-gap-override: 0.00%; }
+@font-face { font-family: "JC Serif Fallback"; src: local("Georgia Bold"), local("Georgia-Bold"); font-weight: 700; font-style: normal; size-adjust: 88.15%; ascent-override: 117.53%; descent-override: 38.00%; line-gap-override: 0.00%; }
+@font-face { font-family: "JC Serif Fallback"; src: local("Georgia Italic"), local("Georgia-Italic"); font-weight: 400; font-style: italic; size-adjust: 92.05%; ascent-override: 112.55%; descent-override: 36.39%; line-gap-override: 0.00%; }
 
 :root {
   color-scheme: light dark;
@@ -38,7 +40,7 @@
   --underline: #b4ab9c;
   --text-weight: 400;
   --serif: "JC Serif", "JC Serif Fallback", Charter, "Iowan Old Style", Georgia, serif;
-  --display: "JC Serif Display", "JC Serif", Charter, Georgia, serif;
+  --display: "JC Serif Display", "JC Serif", "JC Serif Fallback", Charter, Georgia, serif;
 }
 @media screen and (prefers-color-scheme: dark) {
   :root {

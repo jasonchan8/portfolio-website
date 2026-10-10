@@ -88,4 +88,4 @@ python3 -m venv /tmp/fonts-venv
 /tmp/fonts-venv/bin/python scripts/subset-fonts.py
 ```
 
-The script also prints the `@font-face` rule for "JC Serif Fallback". The rule sizes Georgia to the subsets' width and line metrics, so text barely moves when the webfonts arrive. Paste it into `index.html` after you cut the fonts again or change much of the text.
+The script also prints the three `@font-face` rules for "JC Serif Fallback", one each for Georgia, Georgia Bold, and Georgia Italic. Each rule sizes its Georgia style to the width and line metrics of the subset it stands in for, so text barely moves when the webfonts arrive. Paste them into `index.html` after you cut the fonts again or change much of the text.
