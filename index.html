@@ -128,7 +128,7 @@ footer { padding-bottom: 4rem; }
 .copy:hover { color: var(--ink); border-color: var(--ink-2); }
 
 @media (min-width: 62rem) {
-  @supports (grid-template-columns: subgrid) {
+  @supports (grid-template-columns: subgrid) and selector(:has(+ *)) {
     body { font-size: 1.125rem; }
     .standfirst { font-size: 1.3125rem; }
     .sheet { max-width: none; display: grid; grid-template-columns: minmax(0, 37rem) minmax(13rem, 16rem); column-gap: clamp(2.5rem, 5vw, 4.5rem); justify-content: center; align-items: baseline; }
