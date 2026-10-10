@@ -37,7 +37,7 @@
   --ink-2: #5b574f;
   --rule: #d6d0c4;
   --red: #a8321f;
-  --underline: #b4ab9c;
+  --underline: #8f8676;
   --text-weight: 400;
   --serif: "JC Serif", "JC Serif Fallback", Charter, "Iowan Old Style", Georgia, serif;
   --display: "JC Serif Display", "JC Serif", "JC Serif Fallback", Charter, Georgia, serif;
@@ -64,7 +64,7 @@ body {
   font-size: 1.0625rem;
   font-weight: var(--text-weight);
   line-height: 1.6;
-  font-variant-numeric: oldstyle-nums proportional-nums;
+  font-variant-numeric: lining-nums proportional-nums;
   font-kerning: normal;
   text-rendering: optimizeLegibility;
 }
@@ -97,7 +97,7 @@ h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.5rem, 1.7
 .stat { color: var(--ink); }
 .stat p { margin: 0 0 .8rem; font-size: 1rem; line-height: 1.3; }
 /* A block here would make Chrome drop this paragraph from its accessibility tree, so screen readers would no longer get the number and caption as one sentence. */
-.stat .total { display: inline-block; width: 100%; margin-bottom: .35rem; font-size: 4.25rem; line-height: .9; font-variant-numeric: lining-nums; }
+.stat .total { display: inline-block; width: 100%; margin-bottom: .35rem; font-size: 4.25rem; line-height: .9; }
 .stat .caption { font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; }
 .stat ol { list-style: none; margin: 0; padding: 0; }
 .stat li { display: flex; justify-content: space-between; gap: 1rem; padding: .3rem 0; border-top: 1px solid var(--rule); }
