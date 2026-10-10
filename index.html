@@ -40,7 +40,7 @@
   --serif: "JC Serif", "JC Serif Fallback", Charter, "Iowan Old Style", Georgia, serif;
   --display: "JC Serif Display", "JC Serif", Charter, Georgia, serif;
 }
-@media (prefers-color-scheme: dark) {
+@media screen and (prefers-color-scheme: dark) {
   :root {
     --paper: #161513;
     --ink: #e6e1d5;
@@ -153,7 +153,10 @@ footer { padding-bottom: 4rem; }
   .skip, .copy { display: none; }
   body { font-size: 10.5pt; }
   figure { break-inside: avoid; }
-  .links a[href^="http"]::after, .links a[href^="mailto"]::after { content: " (" attr(href) ")"; }
+  h2, h3, .head, .meta { break-after: avoid; }
+  .bullets li { break-inside: avoid; }
+  .links a[href^="http"]::after { content: " (" attr(href) ")"; }
+  .links a[href$=".pdf"]::after { content: " (www.jasonchan.codes/" attr(href) ")"; }
 }
 </style>
 </head>
