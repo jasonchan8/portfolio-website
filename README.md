@@ -40,7 +40,7 @@ The masthead leads with the number of months of full-time work, then lists each 
 <li><span>Visa</span> <span>3<span class="vh"> months</span></span></li>
 ```
 
-The hidden " months" makes a screen reader say "Visa 3 months". The row of the current term also ends in `<small>now</small>`.
+The hidden " months" makes a screen reader say "Visa 3 months". A row ends in `<small>now</small>` only when that employer's dates in `resume.tex` end in "Present".
 
 The numbers come from `resume.tex`. The date field of each internship's `\entry` ends in "N mo full-time", and the total is the sum of those N. Because the sum appears nowhere in `resume.tex`, `npm run verify` adds it to the numbers that the page may show. It also reads the same date fields and fails when:
 
@@ -51,13 +51,12 @@ The numbers come from `resume.tex`. The date field of each internship's `\entry`
 
 ### When the DraftKings term ends
 
-Three places say that the term is current. Change them in one commit:
+Two places say that the term is current. Change them in one commit:
 
 1. The masthead. The standfirst, `<meta name="description">`, and `og:description` say "intern at DraftKings".
-2. The DraftKings entry. Its `.when` reads "Aug 2026 to present", and its `.term` gives the length. Its second bullet is in the present tense. Change the bullets in `resume.tex` first, then copy them again.
-3. The full-time total. Remove `<small>now</small>` from the DraftKings row. If the term's final length is not 5 months, change the row and the total too.
+2. The DraftKings entry. Its first bullet says "now building it". Change the bullet in `resume.tex` first, then copy it again.
 
-Then run `npm run verify`. `og.png` names no employer, so it stays as it is.
+If the term's final length is not 5 months, change the entry's `.when` and `.term`, the DraftKings row, and the total to match `resume.tex`. Then run `npm run verify`. `og.png` names no employer, so it stays as it is.
 
 ## Check the page
 

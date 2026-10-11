@@ -116,10 +116,10 @@ h3 { font-size: 1.5rem; font-weight: 620; line-height: 1.2; letter-spacing: -.00
 .quote blockquote { margin: 0 0 .35rem; color: var(--ink); font-style: italic; }
 .quote blockquote p { margin: 0; }
 
-.skills { margin: 0; }
-.skills div { margin-bottom: .45rem; }
-.skills dt { display: inline; font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; margin-right: .12em; }
-.skills dd { display: inline; margin: 0; }
+.run-in { margin: 0; }
+.run-in div { margin-bottom: .45rem; }
+.run-in dt { display: inline; font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 620; margin-right: .12em; }
+.run-in dd { display: inline; margin: 0; }
 
 footer { padding-bottom: 4rem; }
 .colophon { border-left-color: var(--rule); }
@@ -183,7 +183,7 @@ footer { padding-bottom: 4rem; }
   <div class="note stat">
     <p><span class="total">14</span> <span class="caption">months of full-time software engineering</span></p>
     <ol>
-      <li><span>DraftKings</span> <span>5<span class="vh"> months</span> <small>now</small></span></li>
+      <li><span>DraftKings</span> <span>5<span class="vh"> months</span></span></li>
       <li><span>Visa</span> <span>3<span class="vh"> months</span></span></li>
       <li><span>Teledyne FLIR</span> <span>6<span class="vh"> months</span></span></li>
     </ol>
@@ -196,11 +196,10 @@ footer { padding-bottom: 4rem; }
 
     <article class="sub entry" id="draftkings">
       <div class="head"><h3>DraftKings</h3><p class="role">Software Engineering Intern, Casino Native</p></div>
-      <p class="note meta"><span class="when">Aug 2026 to present</span> <span class="term">5 months, full-time</span> <span>Boston, MA</span> <span>Kotlin, Android, Datadog</span></p>
+      <p class="note meta"><span class="when">Aug 2026 to Dec 2026</span> <span class="term">5 months, full-time</span> <span>Boston, MA</span> <span>Kotlin, Android, Datadog</span></p>
       <ul class="bullets">
-        <li>Built a proof of concept for an unreleased player-facing feature in DraftKings’ Android casino app, then turned it into the technical plan the team approved, settling the client architecture and API contract with product and platform engineers.</li>
-        <li>Implementing that plan as the sole engineer across 5 scoped tickets, shipping behind a feature flag so the team can enable it for a slice of players and turn it off without cutting a release.</li>
-        <li>Merged 10 Kotlin bug fixes across three of DraftKings’ consumer apps, Casino, Sportsbook, and Golden Nugget Online Casino, ranging from layout defects to gaps in Datadog logging that were hiding failures in production.</li>
+        <li>Sole client engineer on an unreleased feature that gives players a passive, interactive reminder of DraftKings’ Android casino app between sessions; took it from proof of concept to an approved technical plan, settling its architecture and API contract with product and platform engineers; now building it in Kotlin behind a feature flag.</li>
+        <li>Closed gaps in Datadog logging that were hiding failures in production, and fixed layout defects, across 3 DraftKings mobile apps (Casino, Sportsbook, Golden Nugget Online Casino) in 10 merged Kotlin fixes.</li>
       </ul>
     </article>
 
@@ -208,19 +207,19 @@ footer { padding-bottom: 4rem; }
       <div class="head"><h3>Visa</h3><p class="role">Software Engineering Intern, Payment Product Development</p></div>
       <p class="note meta"><span class="when">May 2026 to Jul 2026</span> <span class="term">3 months, full-time</span> <span>Foster City, CA</span></p>
       <ul class="bullets">
-        <li>Built an LLM-powered assistant into Visa’s cross-border settlement onboarding flow that tells applicants what each of 4 countries requires for a given form field, so they finish without leaving the page to look it up.</li>
-        <li>Designed a rules validator for compliance attestations that resolves requirements per account tier and returns three outcomes instead of two, routing ambiguous input to human review instead of guessing a wrong pass or fail; verified with 127 unit tests.</li>
-        <li>Rebuilt the form’s progress tracking so the progress bar, checklist, and needs-attention count all derive from one state model and cannot disagree; excluded prefilled defaults so the count reflects only what the user still has to do.</li>
+        <li>Co-built a GenAI assistant that helped cut the rejection rate on Visa Treasury’s cross-border settlement onboarding form from 53% to under 15%; with one other intern, owned the chat widget, LLM orchestration, and validation, and delivered a working proof of concept in 8 weeks that later went to production.</li>
+        <li>Designed the assistant deterministic-first, with regex and country-rule checks catching format and compliance errors before the LLM runs; the model sees only injected country data, with inputs allowlisted and internal IDs stripped.</li>
+        <li>Built a rules validator for compliance attestations that resolves requirements per account tier and returns pass, fail, or human review, so ambiguous input goes to a person instead of a guessed verdict; verified with 127 unit tests.</li>
       </ul>
     </article>
 
     <article class="sub entry" id="teledyne-flir">
       <div class="head"><h3>Teledyne FLIR</h3><p class="role">Software Engineering Intern, Unmanned Ground Systems</p></div>
-      <p class="note meta"><span class="when">Jan 2025 to Jun 2025</span> <span class="term">6 months, full-time</span> <span>Billerica, MA</span> <span>Java, Android, REST, JUnit, Linux</span></p>
+      <p class="note meta"><span class="when">Jan 2025 to Jun 2025</span> <span class="term">6 months, full-time</span> <span>Billerica, MA</span> <span>Java, Android, REST, JUnit, Jenkins</span></p>
       <ul class="bullets">
-        <li>Shipped 8 Java features into FLIR’s 100K-line Android operator console for unmanned ground vehicles, the software field operators use to run the vehicles in live operations.</li>
-        <li>Fixed 40+ concurrency and memory-leak defects across real-time telemetry and video streaming pipelines on Linux, cutting reported system failures by 70%.</li>
-        <li>Built REST endpoints for vehicle-to-operator state sync, and wrote the JUnit suites that took the console’s test coverage from 35% to 80%.</li>
+        <li>Developed full-stack Android and Java features for FLIR’s uPoint Multi-Robot Control System, the controller operators use to run all 5 of FLIR’s ground robot lines in live field operations.</li>
+        <li>Resolved 40+ prioritized engineering tickets in the 100K+ line codebase, including 8 shipped features, bug fixes, and system optimizations, on an Agile team with peer code review.</li>
+        <li>Implemented REST endpoints for vehicle-to-operator state sync, and wrote JUnit suites, run in Jenkins CI, that raised test coverage on owned modules from 35% to 80%.</li>
       </ul>
       <figure class="note quote">
         <blockquote><p>“Jason’s performance was excellent and I highly recommend him.”</p></blockquote>
@@ -234,10 +233,10 @@ footer { padding-bottom: 4rem; }
 
     <article class="sub entry" id="cosign">
       <div class="head"><h3>Cosign</h3><p class="role">HackMIT</p></div>
-      <p class="note meta"><span class="when">Sept 2025</span> <span class="term">Top 15 of 500+ teams</span> <span>C++, Python, TensorFlow, Flask, SocketIO</span></p>
+      <p class="note meta"><span class="when">Sep 2025</span> <span class="term">Top 15 of 319 projects</span> <span>Python, TensorFlow, Flask, SocketIO</span></p>
       <ul class="bullets">
-        <li>Built an ASL gesture recognition system serving classifications over Flask and SocketIO at sub-200ms inference latency; placed top 15 of 500+ teams at HackMIT.</li>
-        <li>Trained a CNN+LSTM pipeline on 90K+ frames across 250+ gestures; added request batching and async processing to hold latency under concurrent load.</li>
+        <li>Built a machine learning system that recognizes ASL gestures, serving classifications over Flask and SocketIO at sub-200ms inference latency; placed top 15 of 319 projects at HackMIT.</li>
+        <li>Trained a CNN+LSTM on 90K+ frames across 250+ gestures to over 95% classification accuracy; added request batching and async processing to the server.</li>
       </ul>
     </article>
 
@@ -246,7 +245,7 @@ footer { padding-bottom: 4rem; }
       <p class="note meta"><span class="when">Apr 2024</span> <span class="term">Selected from 1,000+ applicants</span> <span>Built on-site at X HQ over a weekend</span> <span>Python, LLMs, X API, Chrome Extension</span></p>
       <ul class="bullets">
         <li>Built a scam-post classifier for X that pulls a user’s timeline through the X API and flags likely scams with a few-shot LLM, surfacing candidates in a Chrome extension for the user to judge instead of hiding posts on their behalf.</li>
-        <li>Wrote the Python pipeline that scored the classifier against 10K+ labeled examples; selected from 1,000+ applicants to build on-site at X HQ over a weekend.</li>
+        <li>Wrote the Python pipeline that scored the classifier at 98% accuracy on 10K+ labeled examples; selected from 1,000+ applicants to build on-site at X HQ over a weekend.</li>
       </ul>
     </article>
   </section>
@@ -254,18 +253,22 @@ footer { padding-bottom: 4rem; }
   <section class="sub" aria-labelledby="education">
     <h2 id="education">Education</h2>
     <article class="sub entry" id="northeastern">
-      <div class="head"><h3>Northeastern University</h3><p class="role">B.S. in Computer Science, Khoury College of Computer Sciences</p></div>
+      <div class="head"><h3>Northeastern University</h3><p class="role">B.S. in Computer Science, Concentration in AI, Minor in Mathematics</p></div>
       <p class="note meta"><span class="when">Expected May 2027</span> <span>Boston, MA</span> <span>GPA 3.8 / 4.0</span></p>
+      <dl class="run-in">
+        <div><dt>Coursework</dt> <dd>Algorithms &amp; Data Structures, Object-Oriented Design, Operating Systems, Distributed Systems</dd></div>
+      </dl>
     </article>
   </section>
 
   <section class="sub" aria-labelledby="skills">
     <h2 id="skills">Skills</h2>
-    <dl class="skills">
+    <dl class="run-in">
       <div><dt>Languages</dt> <dd>Java, Kotlin, Python, C++, C, TypeScript, JavaScript, SQL</dd></div>
-      <div><dt>Platforms and infrastructure</dt> <dd>Android, Linux/Unix, Docker, AWS, Jenkins, Datadog, Bash</dd></div>
-      <div><dt>Frameworks and APIs</dt> <dd>React, Node.js, Flask, TensorFlow, Spring Boot, RESTful APIs</dd></div>
-      <div><dt>Data and testing</dt> <dd>PostgreSQL, MongoDB, JUnit</dd></div>
+      <div><dt>Platforms and infrastructure</dt> <dd>Android, Linux/Unix, Docker, AWS, Bash</dd></div>
+      <div><dt>Developer tools</dt> <dd>Git, Claude, Codex, Jenkins, Datadog</dd></div>
+      <div><dt>Frameworks and APIs</dt> <dd>React, Node.js, Flask, TensorFlow, RESTful APIs</dd></div>
+      <div><dt>Data and testing</dt> <dd>MongoDB (NoSQL), JUnit</dd></div>
     </dl>
   </section>
 </main>
