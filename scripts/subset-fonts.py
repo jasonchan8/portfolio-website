@@ -18,7 +18,7 @@ from fontTools.varLib import instancer
 URL = "https://github.com/adobe-fonts/source-serif/releases/download/4.005R/source-serif-4.005_WOFF2.zip"
 SHA256 = "af10e80dcd2296748b04cb9917db9f7ba0ae65101165fd2f0c16b9812d9abd28"
 ARCHIVE = Path(tempfile.gettempdir()) / "source-serif-4.005_WOFF2.zip"
-GEORGIA = Path(os.environ.get("GEORGIA", "/System/Library/Fonts/Supplemental/Georgia.ttf"))
+GEORGIA_DIR = Path(os.environ.get("GEORGIA_DIR", "/System/Library/Fonts/Supplemental"))
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "fonts"
 
@@ -38,6 +38,13 @@ FACES = {
     "serif-italic.woff2": ("SourceSerif4Variable-Italic.ttf.woff2", {"wght": 400, "opsz": 20}, TEXT, "Italic"),
     "serif-display.woff2": ("SourceSerif4Variable-Roman.ttf.woff2", {"wght": 400, "opsz": 60}, LETTERS, "Display"),
 }
+
+PAGE_BOLD_WEIGHT = 620
+FALLBACKS = [
+    ("Georgia.ttf", 400, "normal", "serif-text.woff2", {}),
+    ("Georgia Bold.ttf", 700, "normal", "serif-text.woff2", {"wght": PAGE_BOLD_WEIGHT}),
+    ("Georgia Italic.ttf", 400, "italic", "serif-italic.woff2", {}),
+]
 
 
 def sha256(path: Path) -> str:
@@ -103,16 +110,22 @@ def average_advance(font: TTFont, text: str) -> float:
     return sum(widths) / len(widths) / font["head"].unitsPerEm
 
 
-def fallback_rule(text_font: Path) -> str:
-    serif, georgia, sample = TTFont(text_font), TTFont(GEORGIA), page_text()
-    size = average_advance(serif, sample) / average_advance(georgia, sample)
-    upm, hhea = serif["head"].unitsPerEm, serif["hhea"]
-    ascent, descent, gap = hhea.ascent / upm / size, -hhea.descent / upm / size, hhea.lineGap / upm / size
-    return (
-        '@font-face { font-family: "JC Serif Fallback"; src: local("Georgia"); '
-        f"size-adjust: {size:.2%}; ascent-override: {ascent:.2%}; "
-        f"descent-override: {descent:.2%}; line-gap-override: {gap:.2%}; }}"
-    )
+def fallback_rules() -> list[str]:
+    sample, rules = page_text(), []
+    for local_file, weight, style, webfont, axes in FALLBACKS:
+        serif, georgia = TTFont(OUT / webfont), TTFont(GEORGIA_DIR / local_file)
+        if axes:
+            serif = instancer.instantiateVariableFont(serif, axes)
+        src = ", ".join(f'local("{name}")' for name in dict.fromkeys(georgia["name"].getDebugName(i) for i in (4, 6)))
+        size = average_advance(serif, sample) / average_advance(georgia, sample)
+        upm, hhea = serif["head"].unitsPerEm, serif["hhea"]
+        ascent, descent, gap = hhea.ascent / upm / size, -hhea.descent / upm / size, hhea.lineGap / upm / size
+        rules.append(
+            f'@font-face {{ font-family: "JC Serif Fallback"; src: {src}; font-weight: {weight}; font-style: {style}; '
+            f"size-adjust: {size:.2%}; ascent-override: {ascent:.2%}; "
+            f"descent-override: {descent:.2%}; line-gap-override: {gap:.2%}; }}"
+        )
+    return rules
 
 
 if __name__ == "__main__":
@@ -122,4 +135,4 @@ if __name__ == "__main__":
             cut(zipped.read(f"source-serif-4.005_WOFF2/VAR/{source}"), axes, unicodes, style, OUT / name)
             print(f"{name:22} {(OUT / name).stat().st_size / 1024:6.1f} KB  {axes}")
     if (REPO / "index.html").exists():
-        print(fallback_rule(OUT / "serif-text.woff2"))
+        print("\n".join(fallback_rules()))
