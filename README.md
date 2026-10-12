@@ -80,7 +80,7 @@ Google Fonts serves Source Serif 4 without small caps or old-style figures, so t
 - `serif-italic.woff2` is the italic at weight 400 and optical size 20.
 - `serif-display.woff2` is the roman at weight 400 and optical size 60. It holds letters, digits, and a few punctuation marks, for the name and the full-time total.
 
-The text faces cover Basic Latin, Latin-1, and the punctuation and symbols listed in the script, such as curly quotes, dashes, the bullet, primes, and ± ° × ÷ € → ≥ ≤ ™ © ®. All three subsets keep these OpenType features: kern, liga, ccmp, locl, smcp, c2sc, onum, lnum, tnum, pnum, case, and zero. To cut them again:
+The text faces cover Basic Latin, Latin-1, and the punctuation and symbols listed in the script, such as curly quotes, dashes, the bullet, primes, and ± ° × ÷ € → ≥ ≤ ™ © ®. The script asks to keep these OpenType features: kern, liga, ccmp, locl, smcp, c2sc, onum, lnum, tnum, pnum, case, and zero. The italic subset has no smcp or c2sc, and the display subset has no ccmp. To cut them again:
 
 ```sh
 python3 -m venv /tmp/fonts-venv
